@@ -18,4 +18,4 @@ jobs:
         - ./develop.sh run --rm php composer install
         - ./develop.sh run --rm php php artisan migrate --force --database=test --seed
       script:
-        - ./develop.sh run --rm php php vendor/bin/phpunit
+        - ./develop.sh run --rm php ./vendor/bin/phpunit
