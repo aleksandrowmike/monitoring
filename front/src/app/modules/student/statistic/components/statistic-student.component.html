@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="search-bar content is-medium">
+    <p>Статистика</p>
+  </div>
+  <div class="container is-fluid">
+  <div class="columns is-flex-wrap">
+    <div *ngFor="let faculty of faculties" class="column is-4">
+      <app-card [faculty]="faculty"></app-card>
+    </div>
+  </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

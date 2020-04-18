@@ -1,0 +1,33 @@
+components:
+  schemas:
+    Plan:
+      type: object
+      description: 'Дальнейшие планы студента'
+      properties:
+        job:
+          type: boolean
+          description: 'Работа'
+        army:
+          type: boolean
+          description: 'Армия'
+        business:
+          type: boolean
+          description: 'Бизнесс'
+        decree:
+          type: boolean
+          description: 'Декрет'
+        education:
+          type: boolean
+          description: 'Продолжение обучения'
+        other:
+          type: string
+          description: 'Другое'
+          example: 'Я собираюсь ничего не делать'
+        level:
+          type: string
+          description: 'Степень образования дальнейшего обучения'
+          example: 'Бакалавриат'
+        university:
+          type: string
+          description: 'Университет дальнейшего образования'
+          example: 'МГУ им Ломоносова'

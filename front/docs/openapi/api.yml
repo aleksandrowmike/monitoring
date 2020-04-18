@@ -1,0 +1,45 @@
+openapi: 3.0.1
+
+servers:
+  - url: http://mon.career.unn.ru/api
+    description: 'Default server'
+
+info:
+  title: 'Мониторинг выпускников'
+  version: 1.0.0
+
+paths:
+  /auth/sign-in:
+    $ref: './paths/auth/sign-in.yml#/paths/auth~1sign-in'
+  /auth/sign-up:
+    $ref: './paths/auth/sign-up.yml#/paths/auth~1sign-up'
+  /auth/user:
+    $ref: './paths/auth/user.yml#/paths/auth~1user'
+  /departments:
+    $ref: './paths/departments.yml#/paths/departments'
+  /departments/{department}:
+    $ref: './paths/departments.yml#/paths/departments~1{department}'
+  /students:
+    $ref: './paths/students.yml#/paths/students'
+  /students/{id}:
+    $ref: './paths/students.yml#/paths/students~1{id}'
+  /students/department/{id}:
+    $ref: './paths/students.yml#/paths/students~1department~1{id}'
+  /students/direction/{id}:
+    $ref: './paths/students.yml#/paths/students~1direction~1{id}'
+  /students/filter/{query}:
+    $ref: './paths/students.yml#/paths/students~1filter~1{query}'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  headers:
+    Api-Token:
+      description: 'JWT токен'
+      schema:
+        type: string
+

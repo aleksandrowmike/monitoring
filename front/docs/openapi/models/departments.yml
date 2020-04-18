@@ -1,0 +1,15 @@
+components:
+  schemas:
+    Departments:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+            description: 'id факультета'
+          title:
+            type: string
+            example: 'Радиофизический факультет'
+            description: 'Название факультета'

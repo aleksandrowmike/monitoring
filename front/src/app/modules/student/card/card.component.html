@@ -1,0 +1,38 @@
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">
+      {{faculty.name}}
+    </p>
+    <a (click)="showedContent()" class="card-header-icon" aria-label="more options">
+      <span class="icon">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </a>
+  </header>
+  <div *ngIf="showContent" class="card-content">
+    <div class="content">
+      <article *ngIf="listStatistic else loading" class="panel is-primary">
+          <a *ngFor="let direction of listStatistic.directions"
+             (click)="navigateToSelect(direction.direction.id)"
+             routerLinkActive="is-active"
+             class="panel-block">
+            <span class="panel-icon">
+              <i class="fas fa-book" aria-hidden="true"></i>
+            </span>
+            {{direction.direction.name}} - {{direction.direction.code}}
+          </a>
+      </article>
+    </div>
+  </div>
+  <footer *ngIf="showContent" class="card-footer">
+    <a href="#" class="card-footer-item">Полная статистика</a>
+    <a href="#" class="card-footer-item">Экспорт</a>
+  </footer>
+</div>
+<ng-template #loading>
+  <div class="loading">
+    <span class="icon">
+      <i class="fas fa-spinner fa-pulse fa-3x"></i>
+    </span>
+  </div>
+</ng-template>

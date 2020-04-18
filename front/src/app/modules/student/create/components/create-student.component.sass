@@ -1,0 +1,38 @@
+.header
+  background: #177BB9
+  height: 150px
+  display: flex
+  align-items: center
+  @media screen and (max-width: 768px)
+    height: auto
+  .logo
+    @media screen and (max-width: 768px)
+      width: 270px
+      display: block
+      margin: 1.5rem auto 0
+  &-info
+    display: flex
+    @media screen and (max-width: 768px)
+      align-items: center
+      margin-bottom: 1rem
+    li
+      margin-right: 20px
+      @media screen and (max-width: 768px)
+        margin-bottom: 1rem
+    a
+      color: #fff
+      font-size: 14px
+      vertical-align: baseline
+    @media screen and (max-width: 768px)
+      flex-direction: column
+
+.align-center
+  align-items: center
+.icon
+  vertical-align: middle
+.hero-body
+  padding: 2rem 0 0
+
+.footer
+  margin-top: 3rem
+  padding: 2rem 1.5rem 2rem

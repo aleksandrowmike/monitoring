@@ -1,0 +1,34 @@
+paths:
+  departments:
+    get:
+      tags: ['Departments']
+      summary: 'Получение всех факультетов'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '../models/departments.yml#/components/schemas/Departments'
+  departments/{department}:
+    parameters:
+      - in: path
+        name: department
+        example: 1
+        description: 'id факультета'
+        required: true
+        schema:
+          type: integer
+    get:
+      tags: ['Departments']
+      summary: 'Получение всех направлений выбранного факультета'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '../models/directions.yml#/components/schemas/Directions'
+

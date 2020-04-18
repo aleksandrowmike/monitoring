@@ -1,0 +1,57 @@
+<div class="side-bar">
+  <div class="logo">
+    <a href="/"><h1>Career Unn Monitor</h1></a> <small>{{ editMode | async | textLabelMode }}</small>
+  </div>
+  <div class="card">
+    <header class="card-header">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+          </figure>
+        </div>
+        <div class="media-content">
+          <p class="title is-6">Центр Карьеры</p>
+          <p class="subtitle is-7">main@cstv.unn.ru</p>
+        </div>
+      </div>
+      <a (click)="changeShow()" class="card-header-icon" aria-label="more options">
+      <span class="icon">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+      </a>
+    </header>
+    <div class="card-content" *ngIf="showContent">
+      <div class="content">
+        <ul style="list-style-type: none">
+          <li><a class="btn-tertiary">Settings</a></li>
+          <li (click)="logOut()"><a class="btn-tertiary">Log out</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <aside class="menu">
+    <p class="menu-label">Основное</p>
+    <ul class="menu-list">
+      <li>
+        <a (click)="facultiesToggle()">Список студентов</a>
+        <ul *ngIf="facultiesShow">
+<!--          <div class="field">-->
+<!--            <div class="control">-->
+<!--              <input #faculties_filter  class="input is-small" type="text" placeholder="Поиск факультета"-->
+<!--                     (keyup)="filtered(faculties_filter.value)" autofocus >-->
+<!--            </div>-->
+<!--          </div>-->
+          <li *ngFor="let faculty of facultiesInit">
+            <a (click)="dispatchDirections(faculty.id)"
+               routerLinkActive="is-active"
+               routerLink="/students/{{faculty.id}}">{{faculty.name}}</a>
+          </li>
+        </ul>
+      </li>
+      <li><a routerLink="/faculties" routerLinkActive="is-active">Список факультетов</a></li>
+      <li><a routerLink="/directions" routerLinkActive="is-active">Список направлений</a></li>
+<!--      <li><a routerLink="/employers" routerLinkActive="is-active">Список работодателей</a></li>-->
+    </ul>
+  </aside>
+</div>

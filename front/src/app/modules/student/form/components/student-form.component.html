@@ -1,0 +1,669 @@
+<form *ngIf="!isUpdate" [formGroup]="createForm" (ngSubmit)="submitCreateForm()" novalidate>
+  <div class="field is-horizontal" formGroupName="name">
+    <div class="field-label is-normal">
+      <label class="label">ФИО</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control is-expanded has-icons-left">
+          <input
+            [ngClass]="{'is-danger': isControlInvalid('name.firstName')}"
+            class="input is-small" type="text" placeholder="Имя" formControlName="firstName">
+          <span class="icon is-small is-left">
+            <i class="fas fa-user-graduate"></i>
+          </span>
+        </div>
+        <p *ngIf="isControlInvalid('name.firstName')" class="help is-danger">Это обязательное поле для заполнения</p>
+      </div>
+      <div class="field">
+        <div class="control is-expanded has-icons-left">
+          <input [ngClass]="{'is-danger': isControlInvalid('name.patronymic')}"
+                 class="input is-small" type="text" placeholder="Отчество" formControlName="patronymic">
+          <span class="icon is-small is-left">
+                      <i class="fas fa-user-graduate"></i>
+                    </span>
+        </div>
+        <p *ngIf="isControlInvalid('name.patronymic')" class="help is-danger">Это обязательное поле для заполнения</p>
+      </div>
+      <div class="field">
+        <div class="control is-expanded has-icons-left">
+          <input [ngClass]="{'is-danger': isControlInvalid('name.lastName')}"
+                 class="input is-small" type="text" placeholder="Фамилия" formControlName="lastName">
+          <span class="icon is-small is-left">
+                      <i class="fas fa-user-graduate"></i>
+                    </span>
+        </div>
+        <p *ngIf="isControlInvalid('name.lastName')" class="help is-danger">Это обязательное поле для заполнения</p>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal" formGroupName="contacts">
+    <div class="field-label is-normal">
+      <label class="label">Контакты</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control is-expanded has-icons-left">
+          <input [ngClass]="{'is-danger': isControlInvalid('contacts.email')}" class="input is-small" type="email" placeholder="Email" formControlName="email">
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+        </div>
+        <p *ngIf="isControlInvalid('contacts.email')" class="help is-danger">Это обязательное поле для заполнения</p>
+      </div>
+      <div class="field">
+        <div class="control is-expanded has-icons-left">
+          <input [ngClass]="{'is-danger': isControlInvalid('contacts.phone')}" class="input is-small" type="tel" placeholder="Телефон" formControlName="phone">
+          <span class="icon is-small is-left">
+            <i class="fas fa-phone-alt"></i>
+          </span>
+        </div>
+        <p *ngIf="isControlInvalid('contacts.phone')" class="help is-danger">Это обязательное поле для заполнения</p>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal" formGroupName="education">
+    <div class="field-label is-normal">
+      <label class="label">Обучение</label>
+    </div>
+    <div class="field-body ">
+      <div class="field is-faculty">
+        <div class="control has-icons-left">
+          <span class="select is-small">
+            <select [ngClass]="{'is-danger': isControlInvalid('education.faculty')}"
+                    formControlName="faculty"
+                    (change)="changeFaculty()"
+            >
+              <option [ngValue]="null" selected>Факультет</option>
+              <option *ngFor="let faculty of faculties" value="{{faculty.id}}">{{faculty.name}}</option>
+            </select>
+          </span>
+          <span class="icon is-small is-left">
+            <i class="fas fa-graduation-cap"></i>
+          </span>
+        </div>
+      </div>
+      <div class="field is-narrow">
+        <div class="control has-icons-left">
+          <span class="select is-small">
+            <select [ngClass]="{'is-danger': isControlInvalid('education.level')}"
+                    formControlName="level"
+                    (change)="changeLevel()"
+            >
+              <option [ngValue]="null" selected>Уровень образования</option>
+              <option value="1">Бакалавриат</option>
+              <option value="2">Специалитет</option>
+              <option value="3">Магистратура</option>
+            </select>
+          </span>
+          <span class="icon is-small is-left">
+            <i class="fas fa-graduation-cap"></i>
+          </span>
+        </div>
+      </div>
+      <div class="field is-narrow is-direction">
+        <div class="control has-icons-left">
+          <span class="select is-small">
+            <select [ngClass]="{'is-danger': isControlInvalid('education.direction')}"
+                    formControlName="direction"
+            >
+              <option [ngValue]="null" selected>Направление</option>
+              <option *ngFor="let direction of filteredDirections" value="{{direction.id}}">{{direction.name}}</option>
+            </select>
+          </span>
+          <span class="icon is-small is-left">
+            <i class="fas fa-graduation-cap"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-label">
+      <label class="label">Трудоустроен(а): </label>
+    </div>
+    <div class="field-body">
+      <div class="field is-narrow">
+        <div class="control">
+          <label class="radio">
+            <input type="radio" (change)="isEmployedClick()" value="true" formControlName="isEmployed">
+            Да
+          </label>
+          <label class="radio">
+            <input type="radio" (change)="isEmployedClick()" value="false" formControlName="isEmployed">
+            Нет
+          </label>
+        </div>
+        <p *ngIf="isControlInvalid('isEmployed')" class="help is-danger">Это обязательное поле для заполнения</p>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal" formGroupName="placeOfWork" *ngIf="isEmployed == true">
+    <div class="field-label is-normal" >
+      <label class="label">Место работы</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control is-expanded has-icons-left">
+          <input [ngClass]="{'is-danger': isControlInvalid('placeOfWork.organization')}"
+                 class="input is-small" type="text" placeholder="Организация" formControlName="organization">
+          <span class="icon is-small is-left">
+             <i class="fas fa-address-card"></i>
+          </span>
+        </div>
+        <p *ngIf="isControlInvalid('placeOfWork.organization')" class="help is-danger">Это обязательное поле для заполнения</p>
+      </div>
+      <div class="field">
+        <div class="control is-expanded has-icons-left">
+          <input [ngClass]="{'is-danger': isControlInvalid('placeOfWork.position')}"
+                 class="input is-small" type="text" placeholder="Должность" formControlName="position">
+          <span class="icon is-small is-left">
+            <i class="fas fa-address-card"></i>
+          </span>
+        </div>
+        <p *ngIf="isControlInvalid('placeOfWork.position')" class="help is-danger">Это обязательное поле для заполнения</p>
+      </div>
+      <p *ngIf="isControlInvalid('placeOfWork')" class="help is-danger">Это обязательное поле для заполнения</p>
+    </div>
+  </div>
+  <div class="field is-horizontal" formGroupName="placeOfWork" *ngIf="isEmployed">
+    <div class="field-label"><label class="label"></label></div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control is-expanded has-icons-left">
+          <input [ngClass]="{'is-danger': isControlInvalid('placeOfWork.organizationCity')}"
+                 class="input is-small" type="text" formControlName="organizationCity" placeholder="Фактический адрес организации (город)">
+          <span class="icon is-small is-left">
+            <i class="fas fa-address-card"></i>
+          </span>
+        </div>
+        <p *ngIf="isControlInvalid('placeOfWork.organizationCity')" class="help is-danger">Это обязательное поле для заполнения</p>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal" *ngIf="isEmployed">
+    <div class="field-label">
+      <label class="label">Направление деятельности: </label>
+    </div>
+    <div class="field-body">
+      <div class="field is-narrow">
+        <div class="control">
+          <label class="radio">
+            <input type="radio" formControlName="activity" value="true">
+            по специальности
+          </label>
+          <label class="radio">
+            <input type="radio" formControlName="activity" value="false">
+            не по специальности
+          </label>
+        </div>
+        <p *ngIf="isControlInvalid('activity')" class="help is-danger">Это обязательное поле для заполнения</p>
+
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-label">
+      <label class="label">Желаете ли Вы работать в дальнейшем: </label>
+    </div>
+    <div class="field-body is-align-center is-like-work">
+      <div class="field is-narrow">
+        <div class="control">
+          <label class="radio">
+            <input type="radio" value="true" formControlName="isLikeWork">
+            по специальности
+          </label>
+          <label class="radio">
+            <input type="radio" value="false" formControlName="isLikeWork">
+            не по специальности
+          </label>
+        </div>
+        <p *ngIf="isControlInvalid('isLikeWork')" class="help is-danger">Это обязательное поле для заполнения</p>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal" formGroupName="plans">
+    <div class="field-label">
+      <label class="label">Ваши планы на будущеe: </label>
+    </div>
+    <div class="field-body">
+      <div class="field is-grouped">
+        <p class="control">
+          <label class="checkbox">
+            <input type="checkbox" (change)="changeEducation()"  formControlName="education">
+            продолжение обучения
+          </label>
+        </p>
+        <p class="control">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="work">
+            работа
+          </label>
+        </p>
+        <p class="control">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="decree">
+            декрет
+          </label>
+        </p>
+        <p class="control">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="army">
+            служба в армии
+          </label>
+        </p>
+        <p class="control">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="business">
+            создание собственного бизнеса
+          </label>
+        </p>
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" (change)="changeOther()" formControlName="other">
+            другое
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal" formGroupName="plans" *ngIf="isOther">
+    <div class="field-label"><label class="label">Что именно?</label></div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control is-expanded">
+          <input [ngClass]="{'is-danger': isControlInvalid('plans.otherText')}"
+                 class="input is-small" type="text" formControlName="otherText">
+        </div>
+        <p *ngIf="isControlInvalid('plans.otherText')" class="help is-danger">Это обязательное поле для заполнения</p>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal" formGroupName="continuingEducation" *ngIf="education">
+    <div class="field-label">
+      <label class="label">Продолжение обучения: </label>
+    </div>
+    <div class="field-body">
+      <div class="field is-narrow">
+        <p class="control has-icons-left">
+                    <span class="select is-small">
+                      <select formControlName="university">
+                        <option [ngValue]="null" selected>Вуз</option>
+                        <option>ННГУ</option>
+                        <option>Другой вуз</option>
+                      </select>
+                    </span>
+          <span class="icon is-small is-left">
+                      <i class="fas fa-graduation-cap"></i>
+                    </span>
+        </p>
+      </div>
+      <div class="field is-narrow">
+        <p class="control has-icons-left">
+                    <span class="select is-small">
+                      <select formControlName="level">
+                        <option [ngValue]="null" selected>Уровень подготовки</option>
+                        <option>Бакалавриат</option>
+                        <option>Магистратура</option>
+                        <option>Аспиратнура</option>
+                      </select>
+                    </span>
+          <span class="icon is-small is-left">
+                      <i class="fas fa-graduation-cap"></i>
+                    </span>
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-label">
+      <label class="label">Согласны ли Вы с информирование о вакансиях: </label>
+    </div>
+    <div class="field-body is-align-center">
+      <div class="field is-narrow">
+        <div class="control">
+          <label class="radio">
+            <input type="radio" value="true" formControlName="agreement">
+            Да
+          </label>
+          <label class="radio">
+            <input type="radio" value="false" formControlName="agreement">
+            Нет
+          </label>
+        </div>
+        <p *ngIf="isControlInvalid('agreement')" class="help is-danger">Это обязательное поле для заполнения</p>
+      </div>
+    </div>
+  </div>
+  <div class="field is-horizontal">
+    <div class="field-label"></div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <button type="submit" class="button is-primary is-small">
+            Отправить
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!--<form *ngIf="isUpdate" [formGroup]="createForm" (ngSubmit)="submitCreateForm()" novalidate>-->
+<!--  <div class="field is-horizontal" formGroupName="name">-->
+<!--    <div class="field-body is-name">-->
+<!--      <div class="field">-->
+<!--        <label class="label">Имя</label>-->
+<!--        <div class="control is-expanded has-icons-left">-->
+<!--          <input-->
+<!--            [ngClass]="{'is-danger': isControlInvalid('name.firstName')}"-->
+<!--            class="input is-small" type="text" formControlName="firstName">-->
+<!--          <span class="icon is-small is-left">-->
+<!--            <i class="fas fa-user-graduate"></i>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="field">-->
+<!--        <label class="label">Фамилия</label>-->
+<!--        <div class="control is-expanded has-icons-left">-->
+<!--          <input [ngClass]="{'is-danger': isControlInvalid('name.lastName')}"-->
+<!--                 class="input is-small" type="text"  formControlName="lastName">-->
+<!--          <span class="icon is-small is-left">-->
+<!--                      <i class="fas fa-user-graduate"></i>-->
+<!--                    </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="field">-->
+<!--        <label class="label">Отчество</label>-->
+<!--        <div class="control is-expanded has-icons-left">-->
+<!--          <input [ngClass]="{'is-danger': isControlInvalid('name.patronymic')}"-->
+<!--                 class="input is-small" type="text" formControlName="patronymic">-->
+<!--          <span class="icon is-small is-left">-->
+<!--                      <i class="fas fa-user-graduate"></i>-->
+<!--                    </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <p *ngIf="isControlInvalid('name')" class="help is-danger">Эти поля обязательны для заполнения</p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="field is-horizontal" formGroupName="contacts">-->
+<!--    <div class="field-body is-contacts">-->
+<!--      <div class="field">-->
+<!--        <label class="label">Email</label>-->
+<!--        <div class="control is-expanded has-icons-left">-->
+<!--          <input [ngClass]="{'is-danger': isControlInvalid('contacts.email')}" class="input is-small"-->
+<!--                 type="email"-->
+<!--                 formControlName="email">-->
+<!--          <span class="icon is-small is-left">-->
+<!--            <i class="fas fa-envelope"></i>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="field">-->
+<!--        <label class="label">Телефон</label>-->
+<!--        <div class="control is-expanded has-icons-left">-->
+<!--          <input [ngClass]="{'is-danger': isControlInvalid('contacts.phone')}"-->
+<!--                 class="input is-small" type="tel"-->
+<!--                 formControlName="phone">-->
+<!--          <span class="icon is-small is-left">-->
+<!--            <i class="fas fa-phone-alt"></i>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="field is-horizontal">-->
+<!--    <p *ngIf="isControlInvalid('contacts')" class="help is-danger">Эти поля обязательны для заполнения</p>-->
+<!--  </div>-->
+<!--  <div class="field is-horizontal" formGroupName="education">-->
+<!--    <div class="field-body is-education">-->
+<!--      <div class="field is-faculty">-->
+<!--        <label class="label">Факультет</label>-->
+<!--        <div class="control has-icons-left">-->
+<!--          <span class="select is-small">-->
+<!--            <select [ngClass]="{'is-danger': isControlInvalid('education.faculty')}"-->
+<!--                    formControlName="faculty"-->
+<!--                    (change)="changeFaculty()"-->
+<!--            >-->
+<!--              <option *ngFor="let faculty of faculties" value="{{faculty.id}}">{{faculty.name}}</option>-->
+<!--            </select>-->
+<!--          </span>-->
+<!--          <span class="icon is-small is-left">-->
+<!--            <i class="fas fa-graduation-cap"></i>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="field is-direction is-direction-update">-->
+<!--        <label class="label">Направление</label>-->
+<!--        <div class="control has-icons-left">-->
+<!--          <span class="select is-small">-->
+<!--            <select [ngClass]="{'is-danger': isControlInvalid('education.direction')}"-->
+<!--                    formControlName="direction"-->
+<!--            >-->
+<!--              <option *ngFor="let direction of directions" value="{{direction.id}}">{{direction.name}}</option>-->
+<!--            </select>-->
+<!--          </span>-->
+<!--          <span class="icon is-small is-left">-->
+<!--            <i class="fas fa-graduation-cap"></i>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="field is-horizontal">-->
+<!--    <div class="field-body">-->
+<!--      <div class="field is-employed">-->
+<!--        <label class="label">Трудоустроен(а)</label>-->
+<!--        <div class="control has-icons-left">-->
+<!--          <span class="select is-small">-->
+<!--            <select [ngClass]="{'is-danger': isControlInvalid('isEmployed')}"-->
+<!--                    formControlName="isEmployed"-->
+<!--                    (change)="isEmployedClick()"-->
+<!--            >-->
+<!--              <option value="true">Да</option>-->
+<!--              <option value="false">Нет</option>-->
+<!--            </select>-->
+<!--          </span>-->
+<!--          <span class="icon is-small is-left">-->
+<!--            <i class="fas fa-graduation-cap"></i>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--        <p *ngIf="isControlInvalid('isEmployed')" class="help is-danger">Это обязательное поле для заполнения</p>-->
+<!--      </div>-->
+<!--      <div class="field is-activity">-->
+<!--        <label class="label">Желаете ли Вы работать в дальнейшем</label>-->
+<!--        <div class="control has-icons-left">-->
+<!--          <span class="select is-small">-->
+<!--            <select [ngClass]="{'is-danger': isControlInvalid('isLikeWork')}"-->
+<!--                    formControlName="isLikeWork"-->
+<!--            >-->
+<!--              <option value="true">Да</option>-->
+<!--              <option value="false">Нет</option>-->
+<!--            </select>-->
+<!--          </span>-->
+<!--          <span class="icon is-small is-left">-->
+<!--            <i class="fas fa-graduation-cap"></i>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--        <p *ngIf="isControlInvalid('isLikeWork')" class="help is-danger">Это обязательное поле для заполнения</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="field is-horizontal" formGroupName="placeOfWork" *ngIf="isEmployed == true">-->
+<!--    <div class="field-body">-->
+<!--      <div class="field">-->
+<!--        <label class="label">Организация</label>-->
+<!--        <div class="control is-expanded has-icons-left">-->
+<!--          <input [ngClass]="{'is-danger': isControlInvalid('placeOfWork.organization')}"-->
+<!--                 class="input is-small" type="text" formControlName="organization">-->
+<!--          <span class="icon is-small is-left">-->
+<!--             <i class="fas fa-address-card"></i>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="field">-->
+<!--        <label class="label">Должность</label>-->
+<!--        <div class="control is-expanded has-icons-left">-->
+<!--          <input [ngClass]="{'is-danger': isControlInvalid('placeOfWork.position')}"-->
+<!--                 class="input is-small" type="text" formControlName="position">-->
+<!--          <span class="icon is-small is-left">-->
+<!--            <i class="fas fa-address-card"></i>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="field is-horizontal" formGroupName="placeOfWork" *ngIf="isEmployed">-->
+<!--    <div class="field-body">-->
+<!--      <div class="field is-city">-->
+<!--        <label class="label">Фактический адрес организации (город)</label>-->
+<!--        <div class="control is-expanded has-icons-left">-->
+<!--          <input [ngClass]="{'is-danger': isControlInvalid('placeOfWork.organizationCity')}"-->
+<!--                 class="input is-small" type="text" formControlName="organizationCity">-->
+<!--          <span class="icon is-small is-left">-->
+<!--            <i class="fas fa-address-card"></i>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--        <p *ngIf="isControlInvalid('placeOfWork.organizationCity')" class="help is-danger">Это обязательное поле для заполнения</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="field is-horizontal">-->
+<!--    <div class="field-body">-->
+<!--      <div class="field is-activity">-->
+<!--        <label class="label">Направление деятельности</label>-->
+<!--        <div class="control has-icons-left">-->
+<!--          <span class="select is-small">-->
+<!--            <select [ngClass]="{'is-danger': isControlInvalid('activity')}"-->
+<!--                    formControlName="activity"-->
+<!--                    (change)="changeFaculty()"-->
+<!--            >-->
+<!--              <option value="true">Да</option>-->
+<!--              <option value="false">Нет</option>-->
+<!--            </select>-->
+<!--          </span>-->
+<!--          <span class="icon is-small is-left">-->
+<!--            <i class="fas fa-address-card"></i>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="field is-horizontal" formGroupName="plans">-->
+<!--    <div class="field-body">-->
+<!--      <div class="field is-narrow">-->
+<!--        <label class="label">Планы на будущее</label>-->
+<!--        <div class="is-grouped is-plans">-->
+<!--          <p class="control">-->
+<!--            <label class="checkbox">-->
+<!--              <input type="checkbox" (change)="changeEducation()"  formControlName="education">-->
+<!--              продолжение обучения-->
+<!--            </label>-->
+<!--          </p>-->
+<!--          <p class="control">-->
+<!--            <label class="checkbox">-->
+<!--              <input type="checkbox" formControlName="work">-->
+<!--              работа-->
+<!--            </label>-->
+<!--          </p>-->
+<!--          <p class="control">-->
+<!--            <label class="checkbox">-->
+<!--              <input type="checkbox" formControlName="decree">-->
+<!--              декрет-->
+<!--            </label>-->
+<!--          </p>-->
+<!--          <p class="control">-->
+<!--            <label class="checkbox">-->
+<!--              <input type="checkbox" formControlName="army">-->
+<!--              служба в армии-->
+<!--            </label>-->
+<!--          </p>-->
+<!--          <p class="control">-->
+<!--            <label class="checkbox">-->
+<!--              <input type="checkbox" formControlName="business">-->
+<!--              создание собственного бизнеса-->
+<!--            </label>-->
+<!--          </p>-->
+<!--          <div class="control">-->
+<!--            <label class="checkbox">-->
+<!--              <input type="checkbox" (change)="changeOther()" formControlName="other">-->
+<!--              другое-->
+<!--            </label>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="field is-horizontal" formGroupName="plans" *ngIf="isOther">-->
+<!--    <div class="field-body">-->
+<!--      <div class="field">-->
+<!--        <label class="label">Что именно?</label>-->
+<!--        <div class="control is-expanded">-->
+<!--          <input [ngClass]="{'is-danger': isControlInvalid('plans.otherText')}"-->
+<!--                 class="input is-small" type="text" formControlName="otherText">-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="field is-horizontal" formGroupName="continuingEducation" *ngIf="education">-->
+<!--    <div class="field-body">-->
+<!--      <div class="field is-employed">-->
+<!--        <label class="label">Вуз</label>-->
+<!--        <div class="control has-icons-left">-->
+<!--                    <span class="select is-small">-->
+<!--                      <select formControlName="university">-->
+<!--                        <option>ННГУ</option>-->
+<!--                        <option>Другой вуз</option>-->
+<!--                      </select>-->
+<!--                    </span>-->
+<!--          <span class="icon is-small is-left">-->
+<!--                      <i class="fas fa-graduation-cap"></i>-->
+<!--          </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="field is-employed">-->
+<!--        <label class="label">Уровень подготовки</label>-->
+<!--        <div class="control has-icons-left is-city">-->
+<!--                    <span class="select is-small">-->
+<!--                      <select formControlName="level">-->
+<!--                        <option>Бакалавриат</option>-->
+<!--                        <option>Магистратура</option>-->
+<!--                        <option>Аспиратнура</option>-->
+<!--                      </select>-->
+<!--                    </span>-->
+<!--          <span class="icon is-small is-left">-->
+<!--                      <i class="fas fa-graduation-cap"></i>-->
+<!--                    </span>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="field is-horizontal">-->
+<!--    <div class="field-body">-->
+<!--      <div class="field is-narrow">-->
+<!--        <label class="label">Согласие на информирование</label>-->
+<!--        <div class="control">-->
+<!--          <label class="radio">-->
+<!--            <input type="radio" value="true" formControlName="agreement">-->
+<!--            Да-->
+<!--          </label>-->
+<!--          <label class="radio">-->
+<!--            <input type="radio" value="false" formControlName="agreement">-->
+<!--            Нет-->
+<!--          </label>-->
+<!--        </div>-->
+<!--        <p *ngIf="isControlInvalid('agreement')" class="help is-danger">Это обязательное поле для заполнения</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="field is-horizontal">-->
+<!--    <div class="field-body">-->
+<!--      <div class="field">-->
+<!--        <div class="control">-->
+<!--          <button type="submit" class="button is-primary is-small">-->
+<!--            Отправить-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</form>-->

@@ -1,0 +1,102 @@
+<div class="container">
+  <div class="search-bar content is-medium">
+      <p>Название факультета</p>
+  </div>
+  <div class="columns">
+    <div class="column is-full">
+      <div class="columns columns-container">
+        <div class="column">
+          <student-filter></student-filter>
+        </div>
+      </div>
+      <div class="table-container">
+        <table *ngIf="obs$ | async; else loading" class="table is-hoverable is-striped is-narrow is-fullwidth">
+        <thead>
+          <tr>
+             <th>ID</th>
+             <th (click)="sort('name')">ФИО</th>
+             <th (click)="sort('email')">Email</th>
+             <th (click)="sort('phone')">Телефон</th>
+             <th>Форма обучения</th>
+             <th>Направление обучения</th>
+             <th>По специальности</th>
+             <th>Трудоустроен</th>
+             <th>По специальности</th>
+             <th>Место работы</th>
+             <th>Должность</th>
+             <th>Адрес организации</th>
+            <th>Год выпуска</th>
+            <th>Согласие на уведомления</th>
+             <th>Дата заполнения</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of pageItems" >
+            <td>{{student.student.id}}</td>
+            <td><a routerLink="/students/update/{{student.student.id}}">{{ student.student.name }}</a></td>
+            <td>{{ student.student.email | notSpecified }}</td>
+            <td>{{ student.student.phone | notSpecified}}</td>
+            <td>{{ student.direction.level }}</td>
+            <td title="{{ student.direction.name }}">{{ student.direction.name | shortTitle }}</td>
+            <td>{{ student.student.activity }}</td>
+            <td>{{ student.job.employment }}</td>
+            <td>{{ student.job.specialty }}</td>
+            <td>{{ student.job.company.name }}</td>
+            <td>{{ student.job.position }}</td>
+            <td>{{ student.job.company.city}}</td>
+            <td>{{ student.student.year_graduate}}</td>
+            <td>{{ student.student.agreement }}</td>
+            <td>{{ student.student.year_graduate }}</td>
+          </tr>
+        <tr *ngIf="!pageItems.length">
+          <td [colSpan]="15">Ничего не найдено</td>
+        </tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="columns columns-container">
+        <div class="column">
+          <div class="control has-icons-left">
+            <div class="select">
+              <select #pageSizing (click)="setPageSize(pageSizing.value)">
+                <option value="10" selected>10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="30">30</option>
+              </select>
+            </div>
+            <span class="icon is-left">
+      <i class="fas fa-list-ol"></i>
+  </span>
+          </div>
+        </div>
+        <div class="column is-half">
+          <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+            <a class="pagination-previous"
+               [ngClass]="{disabled:page.currentPage === 1}"
+               (click)="setPage(page.currentPage - 1)"
+            >Назад</a>
+            <a class="pagination-next"
+               [ngClass]="{disabled:page.currentPage === page.totalPages}"
+               (click)="setPage(page.currentPage + 1)"
+            >Вперед</a>
+            <ul class="pagination-list" *ngIf="page.pages && page.pages.length">
+              <li
+                *ngFor="let pager of page.pages"
+                (click)="setPage(pager)"
+              ><a  [ngClass]="{'is-current': page.currentPage === pager }" class="pagination-link">{{pager}}</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <div class="loading">
+    <span class="icon">
+      <i class="fas fa-spinner fa-pulse fa-3x"></i>
+    </span>
+  </div>
+</ng-template>

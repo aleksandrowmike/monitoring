@@ -1,0 +1,27 @@
+components:
+  schemas:
+    Directions:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 1
+            description: 'id направления'
+          title:
+            type: string
+            example: 'ФУНДАМЕНТАЛЬНАЯ ИНФОРМАТИКА И ИНФОРМАЦИОННЫЕ ТЕХНОЛОГИИ'
+            description: 'Название направления'
+          code:
+            type: string
+            example: '04.04.04'
+            description: 'Код направления'
+          department_id:
+            type: interger
+            example: 1
+            description: 'id факультета к которому относится напраление'
+          degree_id:
+            type: integer
+            example: 1
+            description: ' id степени обучения'

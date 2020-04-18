@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="search-bar content is-medium">
+    <p>Список факультетов</p>
+  </div>
+  <div class="columns">
+    <div class="column is-full">
+      <div class="table-container">
+        <table class="table is-hoverable is-striped is-narrow is-fullwidth">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Дата создания</th>
+            <th>Дата редактирования</th>
+<!--            <th *ngIf="mode | async">Actions</th>-->
+          </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let faculties of facultiesList">
+              <td>{{faculties.id}}</td>
+              <td>{{faculties.name}}</td>
+              <td>{{faculties.created_at}}</td>
+              <td>{{faculties.updated_at}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

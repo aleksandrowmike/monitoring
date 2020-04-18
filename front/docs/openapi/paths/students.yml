@@ -1,0 +1,300 @@
+paths:
+  students:
+    post:
+      tags: ['Students']
+      summary: 'Добавление студента в базу данных'
+      requestBody:
+        $ref: '#/components/requestBodies/StudentsRequest'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                        description: 'id добавленного студента'
+        422:
+          $ref: '../responses/errors.yml#/components/responses/UnprocessableEntity'
+    get:
+      tags: ['Students']
+      summary: 'Получение всех студентов'
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Students'
+        403:
+          $ref: '../responses/errors.yml#/components/responses/NotAuthorizedError'
+  students/{id}:
+    parameters:
+      - in: path
+        name: id
+        example: 1
+        description: 'id студента'
+        required: true
+        schema:
+          type: integer
+    put:
+      tags: ['Students']
+      security:
+        - bearerAuth: []
+      summary: 'Обновления студента в базе данных'
+      requestBody:
+        $ref: '#/components/requestBodies/StudentsRequest'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                        description: 'id добавленного студента'
+        422:
+          $ref: '../responses/errors.yml#/components/responses/UnprocessableEntity'
+  students/department/{id}:
+    parameters:
+      - in: path
+        name: id
+        example: 1
+        description: 'id факультета'
+        required: true
+        schema:
+          type: integer
+    get:
+      tags: ['Students']
+      summary: 'Получение студентов выбранного факультета'
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Students'
+        403:
+          $ref: '../responses/errors.yml#/components/responses/NotAuthorizedError'
+        422:
+          $ref: '#/components/responses/StudentValidationErrorsResponse'
+  students/direction/{id}:
+    parameters:
+      - in: path
+        name: id
+        example: 1
+        description: 'id направления'
+        required: true
+        schema:
+          type: integer
+    get:
+      tags: ['Students']
+      summary: 'Получение студентов выбранного направления'
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Students'
+        403:
+          $ref: '../responses/errors.yml#/components/responses/NotAuthorizedError'
+        422:
+          $ref: '#/components/responses/StudentValidationErrorsResponse'
+  students/filter/{query}:
+    parameters:
+      - in: path
+        name: query
+        example: 'year=2020&employment=1'
+        description: 'параметры фильтрации'
+        required: true
+        schema:
+          type: string
+    get:
+      tags: ['Students']
+      summary: 'Получение студентов по выбранным критериям фильтрации'
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Students'
+        403:
+          $ref: '../responses/errors.yml#/components/responses/NotAuthorizedError'
+        422:
+          $ref: '#/components/responses/StudentValidationErrorsResponse'
+
+
+components:
+  responses:
+    StudentValidationErrorsResponse:
+      content:
+        application/json:
+          schema:
+            properties:
+              errors:
+                type: object
+                properties:
+                  department_id:
+                    type: array
+                    items:
+                      type: string
+                      example: 'Факультета не существует'
+              message:
+                type: string
+                example: 'Переданы некорректные данные'
+              type:
+                type: string
+                enum: ['ValidationException']
+  schemas:
+    Students:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 'Имя студента'
+          example: 'Иванов Иван Иванович'
+        email:
+          type: string
+          description: 'email студента'
+          example: 'test@test.ru'
+        phone:
+          type: string
+          description: 'телефон студента'
+          example: '89024567654'
+        plans:
+          $ref: '../models/plans.yml#/components/schemas/Plan'
+        employment:
+          type: object
+          description: 'Трудоустройство студента'
+          properties:
+            company:
+              type: object
+              description: 'Компания в которой работает'
+              properties:
+                title:
+                  type: string
+                  description: 'Название компании'
+                  example: 'Netcraker'
+                city:
+                  type: string
+                  description: 'Город в котором находится организация'
+                  example: 'Нижний Новгород'
+            position:
+              type: string
+              example: 'UX - инженер'
+              description: 'Должность на которой работает'
+            speciality:
+              type: boolean
+              description: 'Работает по специальность да/нет'
+        specialty_activity:
+          type: boolean
+          description: 'Желаете ли Вы работать в дальнейшем'
+        year_graduate:
+          type: string
+          description: 'Год выпуска'
+          example: '2020'
+        agreement:
+          type: boolean
+          description: 'Согласие на обработку персональных данных'
+        direction_id:
+          type: integer
+          description: 'id направления обучения'
+          example: '1'
+        category_id:
+          type: integer
+          description: 'id категории студента'
+          example: '1'
+
+  requestBodies:
+    StudentsRequest:
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                type: string
+                description: 'Имя студента'
+                example: 'Иванов Иван Иванович'
+              email:
+                type: string
+                description: 'email студента'
+                example: 'test@test.ru'
+              phone:
+                type: string
+                description: 'телефон студента'
+                example: '89024567654'
+              plans:
+                $ref: '../models/plans.yml#/components/schemas/Plan'
+              employment:
+                type: object
+                description: 'Трудоустройство студента'
+                properties:
+                  company:
+                    type: object
+                    description: 'Компания в которой работает'
+                    properties:
+                      title:
+                        type: string
+                        description: 'Название компании'
+                        example: 'Netcraker'
+                      city:
+                        type: string
+                        description: 'Город в котором находится организация'
+                        example: 'Нижний Новгород'
+                  position:
+                    type: string
+                    example: 'UX - инженер'
+                    description: 'Должность на которой работает'
+                  speciality:
+                    type: boolean
+                    description: 'Работает по специальность да/нет'
+              specialty_activity:
+                type: boolean
+                description: 'Желаете ли Вы работать в дальнейшем'
+              year_graduate:
+                type: string
+                description: 'Год выпуска'
+                example: '2020'
+              agreement:
+                type: boolean
+                description: 'Согласие на обработку персональных данных'
+              direction_id:
+                type: integer
+                description: 'id направления обучения'
+                example: '1'
+              category_id:
+                type: integer
+                description: 'id категории студента'
+                example: '1'
+
+
