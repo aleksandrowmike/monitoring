@@ -1,7 +1,6 @@
 /node_modules
 /resources/frontend
 /resources/lang
-/docker
 /storage/*.key
 /vendor
 .idea
