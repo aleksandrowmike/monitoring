@@ -18,9 +18,9 @@ jobs:
         - ./develop.sh run --rm php composer install
         - ./develop.sh run --rm php php artisan config:cache --env=testing
         - ./develop.sh run --rm php php artisan migrate --force --database=test --seed
-        - ./develop.sh run --rn php artisan db:seed --force --database=test --class=DepartmentSeeder
-        - ./develop.sh run --rn php artisan db:seed --force --database=test --class=DegreeSeeder
-        - ./develop.sh run --rn php artisan db:seed --force --database=test --class=DirectionSeeder
-        - ./develop.sh run --rn php artisan db:seed --force --database=test --class=CategorySeeder
+        - ./develop.sh run --rm php artisan db:seed --force --database=test --class=DepartmentSeeder
+        - ./develop.sh run --rm php artisan db:seed --force --database=test --class=DegreeSeeder
+        - ./develop.sh run --rm php artisan db:seed --force --database=test --class=DirectionSeeder
+        - ./develop.sh run --rm php artisan db:seed --force --database=test --class=CategorySeeder
       script:
         - ./develop.sh run --rm php ./vendor/bin/phpunit
