@@ -23,9 +23,7 @@ class UserTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->user = factory(User::class)->create();
-
     }
 
     /**
@@ -34,10 +32,7 @@ class UserTest extends TestCase
     */
     public function success()
     {
-        $this->token = JWTAuth::fromUser($this->user);
-        $this->defaultHeaders = [
-            'Authorization' => "Bearer {$this->token}"
-        ];
+        $this->loginAs($this->user);
         $response = $this->getJson(route('auth.user'));
         $response->assertSuccessful();
         $this->assertEquals($this->user->id, $response->json('data.user.id'));

@@ -1,0 +1,26 @@
+stages:
+  # - code-quality
+  - testing
+jobs:
+  include:
+    - language: generic
+      env: NAME="PHP tests"
+      stage: testing
+      sudo: required
+      services:
+        - docker
+      cache:
+        directories:
+          - $HOME/.composer
+      before_script:
+        - ./develop.sh up -d db-test
+        - ./develop.sh build php
+        - ./develop.sh run --rm php composer install
+        - ./develop.sh run --rm php php artisan config:cache --env=testing
+        - ./develop.sh run --rm php php artisan migrate --force --database=test --seed
+        - ./develop.sh run --rm php php artisan db:seed --force --database=test --class=DepartmentSeeder
+        - ./develop.sh run --rm php php artisan db:seed --force --database=test --class=DegreeSeeder
+        - ./develop.sh run --rm php php artisan db:seed --force --database=test --class=DirectionSeeder
+        - ./develop.sh run --rm php php artisan db:seed --force --database=test --class=CategorySeeder
+      script:
+        - ./develop.sh run --rm php ./vendor/bin/phpunit

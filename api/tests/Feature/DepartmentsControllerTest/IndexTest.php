@@ -17,14 +17,5 @@ class IndexTest extends TestCase
         $response = $this->getJson(route('departments.index'));
         $response->assertSuccessful();
     }
-    /**
-     * Получение всех направлений
-     * @test
-     */
-    public function show()
-    {
-        $response = $this->getJson(route('departments.show',1 ));
-        $response->assertSuccessful();
-    }
 
 }
