@@ -76,7 +76,7 @@ class StoreTest extends TestCase
             'agreement' => true,
             'direction_id' => 1,
             'category_id' => 1
-        ])->assertSuccessful();
+        ]);
         $this->assertNotNull($response->json('data.id'));
         $student = Student::findOrFail($response->json('data.id'));
         $employment = Employment::where('student_id',$student->plan_id);

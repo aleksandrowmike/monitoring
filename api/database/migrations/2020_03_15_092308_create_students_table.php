@@ -18,7 +18,7 @@ class CreateStudentsTable extends Migration
 
             $table->bigInteger('direction_id')->unsigned();
             $table->bigInteger('category_id')->unsigned();
-            $table->bigInteger('plan_id')->unsigned();
+            $table->bigInteger('plan_id')->unsigned()->nullable();
 
             $table->string('name');
             $table->string('email');
