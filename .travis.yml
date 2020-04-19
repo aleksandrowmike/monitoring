@@ -1,6 +1,6 @@
 stages:
-  - code-quality
   - testing
+  - code-quality
 jobs:
   include:
     - language: generic
