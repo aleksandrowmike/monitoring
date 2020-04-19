@@ -11,8 +11,8 @@ import { IRecordBook } from "../models/recordbook.interface";
 import { IStatistic } from "../models/statistic.interface";
 import { IStudent } from "../models/student.interface";
 import { selectTokenAuth } from "../store/selectors/auth.selectors";
-import { IAuthState } from "../store/state/auth.state";
 import { IAppState } from "../store/state/app.state";
+import { IAuthState } from "../store/state/auth.state";
 import { NotificationService } from "./notification.service";
 
 export interface IFile {

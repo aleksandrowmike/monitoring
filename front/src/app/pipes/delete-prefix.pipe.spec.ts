@@ -1,7 +1,7 @@
-import { DeletePrefixPipe } from './delete-prefix.pipe';
+import { DeletePrefixPipe } from "./delete-prefix.pipe";
 
-describe('DeletePrefixPipe', () => {
-  it('create an instance', () => {
+describe("DeletePrefixPipe", () => {
+  it("create an instance", () => {
     const pipe = new DeletePrefixPipe();
     expect(pipe).toBeTruthy();
   });
