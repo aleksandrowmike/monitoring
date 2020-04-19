@@ -49,7 +49,7 @@ class DepartmentController extends Controller
      */
     public function show($department)
     {
-        return DirectionResource::collection(Department::find($department)->directions);
+        return DirectionResource::collection(Department::findOrFail($department)->directions);
     }
 
     /**

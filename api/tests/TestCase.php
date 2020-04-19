@@ -15,8 +15,6 @@ abstract class TestCase extends BaseTestCase
 
     public function loginAs(User $user = null)
     {
-        $user = factory(User::class)->create();
-
         $this->auth = $user;
 
         $token = JWTAuth::fromUser($user);
