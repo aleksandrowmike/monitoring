@@ -1,4 +1,7 @@
 <?php
+Route::get('test', function (){
+    return 'test';
+});
 Route::group(['prefix' => 'auth'], function () {
 
     Route::post('sign-in', 'AuthController@signIn')
