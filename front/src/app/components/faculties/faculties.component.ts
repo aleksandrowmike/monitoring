@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { IFaculties } from "../../models/faculties.interface";
-import { selectFacultiesList } from "../../store/selectors/faculties.selectors";
+import { selectFacultiesList } from "../../store/selectors/deraptments.selectors";
 import { IAppState } from "../../store/state/app.state";
 
 @Component({
@@ -15,7 +15,7 @@ export class FacultiesComponent implements OnInit {
   constructor(private _store: Store<IAppState>) { }
 
   ngOnInit(): void {
-    this._store.pipe(select(selectFacultiesList)).subscribe(faculties => this.facultiesList = faculties);
+    // this._store.pipe(select(selectFacultiesList)).subscribe(faculties => this.facultiesList = faculties);
   }
 
 }

@@ -28,6 +28,7 @@
     "@ngrx/router-store": "^8.6.0",
     "@ngrx/store": "^8.6.0",
     "@ngrx/store-devtools": "^8.6.0",
+    "@types/node": "^13.13.0",
     "angular-google-charts": "^0.1.6",
     "angular-ng-autocomplete": "^2.0.1",
     "bulma": "^0.8.0",
@@ -37,6 +38,7 @@
     "merge-stream": "^2.0.0",
     "ngrx-store-localstorage": "^8.0.0",
     "path": "^0.12.7",
+    "query-string": "^6.12.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
@@ -48,7 +50,6 @@
     "@angular/language-service": "~9.0.0",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^8.9.5",
     "codelyzer": "^5.2.1",
     "gulp-remove-files": "0.0.3",
     "jasmine-core": "~3.4.0",

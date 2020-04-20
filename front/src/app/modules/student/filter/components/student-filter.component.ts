@@ -5,7 +5,7 @@ import { select, Store } from "@ngrx/store";
 import { SubscriptionLike } from "rxjs";
 import { IDirections } from "../../../../models/directions.interface";
 import { FilterStudent, GetStudentsForDirections } from "../../../../store/actions/student.actions";
-import { selectDirectionsFacultiesList } from "../../../../store/selectors/faculties.selectors";
+import { selectDirectionsFacultiesList } from "../../../../store/selectors/deraptments.selectors";
 import { slectFilterList } from "../../../../store/selectors/filter.selectors";
 import { IAppState } from "../../../../store/state/app.state";
 

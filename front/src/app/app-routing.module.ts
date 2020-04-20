@@ -1,10 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { DirectionsComponent } from "./components/directions/directions.component";
 import { FacultiesComponent } from "./components/faculties/faculties.component";
 import { NotFoundComponent } from "./components/not-found/not-found.component";
-import { LoginComponent } from "./modules/auth/components/login/login.component";
 import { AuthGuard } from "./modules/auth/guards/auth.guard";
 import { ModalComponent } from "./modules/modal/components/modal.component";
 import { CreateStudentComponent } from "./modules/student/create/components/create-student.component";
@@ -53,9 +51,13 @@ const createRoute: Routes = [
   {path: "success", component: ModalComponent},
 ];
 const routes: Routes = [
-  { path: "", component: DashboardComponent, children: dashboardRoutes, canActivate: [AuthGuard]},
-  { path: "login", component: LoginComponent},
-  { path: "create", component: CreateStudentComponent, children: createRoute},
+  { path: "",
+    loadChildren: () => import("./modules/dashboard/dashboard.module").then(m => m.DashboardModule)
+  },
+  { path: "auth",
+    loadChildren: () => import("./modules/auth/auth.module").then(m => m.AuthModule)
+  },
+  // { path: "create", component: CreateStudentComponent, children: createRoute},
   { path: "404", component: NotFoundComponent },
   { path: "**", redirectTo: "/404"},
 ];

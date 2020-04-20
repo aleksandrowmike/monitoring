@@ -7,9 +7,8 @@ import { Action } from "../../../../interfaces/actions.emun";
 import { IDirections } from "../../../../models/directions.interface";
 import { IFaculties } from "../../../../models/faculties.interface";
 import { IStudent } from "../../../../models/student.interface";
-import { GetAllFaculties, GetDirectionsFaculties } from "../../../../store/actions/faculties.actions";
 import { CreateStudent } from "../../../../store/actions/student.actions";
-import { selectDirectionsFacultiesList, selectFacultiesList } from "../../../../store/selectors/faculties.selectors";
+import { selectDirectionsFacultiesList, selectFacultiesList } from "../../../../store/selectors/deraptments.selectors";
 import { IAppState } from "../../../../store/state/app.state";
 @Component({
   selector: "student-form",
@@ -28,7 +27,7 @@ export class StudentFormComponent implements OnInit, OnDestroy {
   public filteredDirections: IDirections[];
   public subscriptions: SubscriptionLike[] = [];
   constructor(private fb: FormBuilder, private _store: Store<IAppState>, private _activatedRoute: ActivatedRoute) {
-    this._store.dispatch(new GetAllFaculties());
+    // this._store.dispatch(new GetAllFaculties());
   }
   public initCreateForm(): void {
     this.createForm = this.fb.group({
@@ -99,7 +98,7 @@ export class StudentFormComponent implements OnInit, OnDestroy {
   }
   public changeFaculty(): void {
     if (this.createForm.get("education.faculty").value !== null) {
-      this._store.dispatch(new GetDirectionsFaculties({facultiesId: this.createForm.get("education.faculty").value}));
+      // this._store.dispatch(new GetDirectionsFaculties({facultiesId: this.createForm.get("education.faculty").value}));
       this.subscriptions.push(
         this._store.pipe(select(selectDirectionsFacultiesList)).subscribe(list => this.directions = list));
     }
@@ -110,7 +109,7 @@ export class StudentFormComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit(): void {
-    this.subscriptions.push(this._store.pipe(select(selectFacultiesList)).subscribe(list => this.faculties = list));
+    // this.subscriptions.push(this._store.pipe(select(selectFacultiesList)).subscribe(list => this.faculties = list));
     this.initCreateForm();
     switch (this._activatedRoute.snapshot.url[0].path) {
       case Action.update: {

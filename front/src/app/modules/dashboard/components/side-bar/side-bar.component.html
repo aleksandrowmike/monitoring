@@ -1,0 +1,65 @@
+<div class="side-bar" *ngIf="user; else loading">
+  <div class="logo">
+    <a href="/"><h1>Career Unn Monitor</h1></a> <small>{{ editMode | async  }}</small>
+  </div>
+  <div class="card">
+    <header class="card-header">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img class="is-rounded" src="https://freesvg.org/img/Female-Avatar-2.png">
+          </figure>
+        </div>
+        <div class="media-content">
+          <p class="title is-6">{{user.name}}</p>
+          <p class="subtitle is-7">{{user.email}}</p>
+        </div>
+      </div>
+      <a (click)="changeShow()" class="card-header-icon" aria-label="more options">
+      <span class="icon">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+      </a>
+    </header>
+    <div class="card-content" *ngIf="showContent">
+      <div class="content">
+        <ul style="list-style-type: none">
+          <li (click)="signOut()"><a class="btn-tertiary">Выйти</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <aside class="menu">
+    <p class="menu-label">Основное</p>
+    <ul class="menu-list">
+      <li>
+        <a (click)="facultiesToggle()">Факультеты</a>
+        <ul *ngIf="facultyShow">
+          <!--          <div class="field">-->
+          <!--            <div class="control">-->
+          <!--              <input #faculties_filter  class="input is-small" type="text" placeholder="Поиск факультета"-->
+          <!--                     (keyup)="filtered(faculties_filter.value)" autofocus >-->
+          <!--            </div>-->
+          <!--          </div>-->
+          <li *ngFor="let department of departmentsInit">
+            <a (click)="dispatchDirections(department.id)"
+               routerLinkActive="is-active"
+               routerLink="/students/{{department.id}}">{{department.title}}</a>
+          </li>
+        </ul>
+      </li>
+<!--      <li><a routerLink="/faculties" routerLinkActive="is-active">Список факультетов</a></li>-->
+<!--      <li><a routerLink="/directions" routerLinkActive="is-active">Список направлений</a></li>-->
+      <!--      <li><a routerLink="/employers" routerLinkActive="is-active">Список работодателей</a></li>-->
+    </ul>
+  </aside>
+</div>
+<ng-template #loading>
+  <div class="side-bar">
+    <div class="loading">
+      <span class="icon">
+        <i class="fas fa-spinner fa-pulse fa-3x"></i>
+      </span>
+    </div>
+  </div>
+</ng-template>
