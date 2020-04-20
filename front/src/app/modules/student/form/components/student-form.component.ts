@@ -99,8 +99,8 @@ export class StudentFormComponent implements OnInit, OnDestroy {
   public changeFaculty(): void {
     if (this.createForm.get("education.faculty").value !== null) {
       // this._store.dispatch(new GetDirectionsFaculties({facultiesId: this.createForm.get("education.faculty").value}));
-      this.subscriptions.push(
-        this._store.pipe(select(selectDirectionsFacultiesList)).subscribe(list => this.directions = list));
+      this.subscriptions.push();
+        // this._store.pipe(select(selectDirectionsFacultiesList)).subscribe(list => this.directions = list));
     }
   }
   public changeLevel(): void {

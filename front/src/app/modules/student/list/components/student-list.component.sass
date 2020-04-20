@@ -1,0 +1,80 @@
+.search-bar
+  background-color: #fff
+  padding-left: 1.5rem
+  border-bottom: 1px solid #EBEFF2
+  border-left: 1px solid #EBEFF2
+  height: 60px
+  display: flex
+  align-items: center
+  width: 100%
+.is-full
+  padding: 2.5rem
+
+
+
+tr.example-element-row:not(.example-expanded-row):hover
+  background: whitesmoke
+
+
+tr.example-element-row:not(.example-expanded-row):active
+  background: #efefef
+
+
+.example-element-row td
+  border-bottom-width: 0
+
+
+
+.example-element-diagram
+  min-width: 80px
+  border: 2px solid black
+  padding: 8px
+  font-weight: lighter
+  margin: 8px 0
+  height: 104px
+
+
+.example-element-symbol
+  font-weight: bold
+  font-size: 40px
+  line-height: normal
+
+
+.example-element-description
+  padding: 16px
+
+
+.example-element-description-attribution
+  opacity: 0.5
+
+mat-row
+  &:nth-child(odd)
+    min-height: 0
+    border-bottom-width: 0
+
+.example-expanded-row ~ mat-row
+  border-bottom-width: 1px
+
+@media screen and (max-width: 960px)
+  mat-table
+    display: flex
+    flex-direction: column
+
+  mat-header-row
+    min-height: 32px
+
+  mat-header-cell, mat-cell
+    &:not(:first-child)
+      display: none
+
+    &:nth-child(4)
+      display: flex
+
+    &:first-child
+      padding-left: 0
+
+
+mat-row
+  align-items: center
+
+

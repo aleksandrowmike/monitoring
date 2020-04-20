@@ -44,7 +44,7 @@
           <li *ngFor="let department of departmentsInit">
             <a (click)="dispatchDirections(department.id)"
                routerLinkActive="is-active"
-               routerLink="/students/{{department.id}}">{{department.title}}</a>
+               routerLink="students/{{department.id}}">{{department.title}}</a>
           </li>
         </ul>
       </li>

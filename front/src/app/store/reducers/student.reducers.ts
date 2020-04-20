@@ -6,7 +6,7 @@ export function studentReducers (state: IStudentState = initialStudentState, act
     case EStudentActions.GetStudentsForDirectionsSuccess: {
       return {
         ...state,
-        students: action.payload,
+        data: action.payload,
         count: action.payload.length
       };
     }
@@ -25,7 +25,7 @@ export function studentReducers (state: IStudentState = initialStudentState, act
     case EStudentActions.FilterStudentSuccess: {
       return {
         ...state,
-        students: action.payload.students
+        // students: action.payload.students
       };
     }
     case EStudentActions.ResetCreateStudent: {
@@ -64,7 +64,7 @@ export function studentReducers (state: IStudentState = initialStudentState, act
     // }
     case EStudentActions.ResetDataStudents: {
       return {
-        students: null,
+        data: null,
         selectedStudent: null,
         count: null
       };

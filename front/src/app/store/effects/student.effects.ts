@@ -5,7 +5,9 @@ import { select, Store } from "@ngrx/store";
 import { of } from "rxjs";
 import { map, switchMap, tap, withLatestFrom } from "rxjs/operators";
 import { IRecordBook } from "../../models/recordbook.interface";
+import { Student } from "../../models/student";
 import { IStudent } from "../../models/student.interface";
+import { ApiService } from "../../services/api.service";
 import { StudentsService } from "../../services/students.service";
 import {
   CreateStudent,
@@ -23,24 +25,24 @@ import { IAppState } from "../state/app.state";
 
 @Injectable()
 export class StudentEffects {
-  @Effect()
-  getStudent$ = this._actions$.pipe(
-    ofType<GetStudent>(EStudentActions.GetStudent),
-    map(action => action.payload.id),
-    withLatestFrom(this._store.pipe(select(selectStudentList))),
-    switchMap(([id, students]) => {
-
-      const selectedStudent = students.filter(student => student.student.id === id)[0];
-      return of(new GetStudentSuccess(selectedStudent));
-    }),
-    );
+  // @Effect()
+  // getStudent$ = this._actions$.pipe(
+  //   ofType<GetStudent>(EStudentActions.GetStudent),
+  //   map(action => action.payload.id),
+  //   withLatestFrom(this._store.pipe(select(selectStudentList))),
+  //   switchMap(([id, students]) => {
+  //     // const selectedStudent = students.filter(student => student.student.id === id)[0];
+  //     // return of(new GetStudentSuccess(selectedStudent));
+  //   }),
+  //   );
   @Effect()
   getStudents$ = this._actions$.pipe(
     ofType<GetStudentsForDirections>(EStudentActions.GetStudentsForDirections),
     map(action => action.payload.id),
-    switchMap((id: number) => this._studentsService.getStudentsForDirections(id)),
-    switchMap((studentHttp: IStudent[]) => {
-      return of(new GetStudentsForDirectionsSuccess(studentHttp));
+    switchMap((id: number) => this.api.get("students/department/" + id)
+      .pipe(map(response => response.data))),
+    switchMap((students: Student[]) => {
+      return of(new GetStudentsForDirectionsSuccess(students));
     }),
   );
   @Effect()
@@ -87,6 +89,7 @@ export class StudentEffects {
   constructor(
     private _studentsService: StudentsService,
     private _actions$: Actions,
+    private api: ApiService,
     private _store: Store<IAppState>,
     private _router: Router) {}
 }

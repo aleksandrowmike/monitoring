@@ -51,7 +51,7 @@ const createRoute: Routes = [
 ];
 const routes: Routes = [
   { path: "", component: CreateStudentComponent},
-  { path: "dashboard",
+  { path: "admin",
     loadChildren: () => import("./modules/dashboard/dashboard.module").then(m => m.DashboardModule)
   },
   { path: "auth",

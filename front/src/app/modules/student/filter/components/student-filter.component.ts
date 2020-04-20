@@ -79,7 +79,7 @@ export class StudentFilterComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.initFilterForm();
-    this.subscriptions.push(this._store.pipe(select(selectDirectionsFacultiesList)).subscribe(sub => this.directions = sub));
+    // this.subscriptions.push(this._store.pipe(select(selectDirectionsFacultiesList)).subscribe(sub => this.directions = sub));
     this.subscriptions.push(this._store.pipe(select(slectFilterList)).subscribe(filterList => {
       this.companyName = [];
       this.companyPosition = [];

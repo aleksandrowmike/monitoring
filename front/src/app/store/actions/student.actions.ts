@@ -1,5 +1,6 @@
 import { Action } from "@ngrx/store";
 import { IRecordBook } from "../../models/recordbook.interface";
+import { Student } from "../../models/student";
 import { IStudent } from "../../models/student.interface";
 
 export enum EStudentActions {
@@ -44,7 +45,7 @@ export class GetStudentsForDirections implements Action {
 }
 export class GetStudentsForDirectionsSuccess implements Action {
   public readonly type = EStudentActions.GetStudentsForDirectionsSuccess;
-  constructor(public payload: IStudent[]) {}
+  constructor(public payload: Student[]) {}
 }
 export class GetStudent implements Action {
   public readonly type = EStudentActions.GetStudent;

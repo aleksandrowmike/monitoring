@@ -1,13 +1,14 @@
+import { Student } from "../../models/student";
 import { IStudent } from "../../models/student.interface";
 
 export interface IStudentState {
-  students: IStudent[];
+  data: Student[];
   selectedStudent: IStudent;
   count: number;
   createId?: number;
 }
 export const initialStudentState: IStudentState = {
-  students: null,
+  data: null,
   selectedStudent: null,
   count: null
 };
