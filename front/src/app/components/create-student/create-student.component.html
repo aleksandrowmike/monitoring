@@ -1,0 +1,218 @@
+<section class="header">
+  <div class="container">
+    <div class="columns align-center">
+      <div class="column is-3">
+        <img class="logo" src="assets/images/logo.svg" alt="">
+      </div>
+      <div class="column is-7 is-offset-2">
+        <ul class="header-info">
+          <li>
+            <a href="tel:(831)462-35-30">
+            <span class="icon">
+              <i class="fas fa-phone-alt"></i>
+            </span> (831) 462-35-30, 462-35-31</a></li>
+          <li><a href="mailto:main@cstv.unn.ru">
+            <span class="icon">
+              <i class="fas fa-envelope"></i>
+            </span> main@cstv.unn.ru
+          </a></li>
+          <li><a target="_blank" href="https://goo.gl/maps/5Bet1L47Hacue1UT7">
+            <span class="icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </span> пр.Гагарина, 23, корпус 8, каб.103
+          </a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-fluid">
+      <div class="columns">
+        <div class="column is-half
+is-offset-one-quarter">
+          <form [formGroup]="form" (ngSubmit)="saveStudent()" novalidate>
+            <mat-vertical-stepper #stepper>
+              <!-- Контактная ифоромация  -->
+              <mat-step>
+                <ng-template matStepLabel>Контактная информация</ng-template>
+                <div class="step-form">
+                  <mat-form-field>
+                    <mat-label>Ваше имя</mat-label>
+                    <input formControlName="name" matInput>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <mat-label>Ваш email</mat-label>
+                    <input formControlName="email" matInput>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <mat-label>Ваш номер телефона</mat-label>
+                    <input type="text" formControlName="phone" matInput>
+                    <mat-error>{{form.get('phone').errors}}</mat-error>
+                  </mat-form-field>
+
+                  <mat-checkbox formControlName="agreement">Хотите ли вы получать рассылку?</mat-checkbox>
+
+                  <div class="step-button">
+                    <button type="button" mat-raised-button color="primary" matStepperNext>Далее</button>
+                  </div>
+                </div>
+              </mat-step>
+              <!-- Ваши планы на будущее -->
+              <mat-step>
+                <ng-template matStepLabel>Ваши планы на будущее</ng-template>
+                <div class="step-form" formGroupName="plans">
+                  <mat-checkbox formControlName="education" (change)="changeEducation($event.checked)">Продолжение обучения</mat-checkbox>
+                  <div class="show-education" *ngIf="showEducation">
+                    <mat-form-field>
+                      <mat-label>Университет</mat-label>
+                      <input formControlName="university" matInput>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Уровень образования</mat-label>
+                      <mat-select formControlName="level">
+                        <mat-option [value]="1">
+                          Бакалавриат
+                        </mat-option>
+                        <mat-option [value]="2">
+                          Магистратура
+                        </mat-option>
+                        <mat-option [value]="3">
+                          Аспирантура
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <mat-checkbox formControlName="job">Работа</mat-checkbox>
+                  <mat-checkbox formControlName="army">Армия</mat-checkbox>
+                  <mat-checkbox formControlName="decree">Декрет</mat-checkbox>
+                  <mat-checkbox formControlName="business">Бизнес</mat-checkbox>
+                  <mat-form-field class="other-field">
+                    <mat-label>Другое</mat-label>
+                    <input formControlName="other" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="step-form">
+                  <label>Желаете ли вы работать по специальности?</label>
+                  <mat-radio-group formControlName="specialty_activity">
+                    <mat-radio-button class="step-radio" [value]="true">Да</mat-radio-button>
+                    <mat-radio-button [value]="false">Нет</mat-radio-button>
+                  </mat-radio-group>
+                  <div class="step-button">
+                    <button type="button" mat-raised-button color="primary" matStepperPrevious>Назад</button>
+                    <button type="button" mat-raised-button color="primary" matStepperNext>Далее</button>
+                  </div>
+                </div>
+              </mat-step>
+              <!-- Информация об обучение -->
+              <mat-step>
+                <ng-template matStepLabel>Информация об обучение</ng-template>
+                <div class="step-form">
+                  <mat-form-field>
+                    <input
+                      placeholder="Факультет"
+                      [matAutocomplete]="dep"
+                      matInput>
+                    <mat-autocomplete
+                      [displayWith]="displayFn"
+                      (optionSelected)="changeDepartment($event.option.value)"
+                      #dep="matAutocomplete">
+                      <mat-option *ngFor="let department of departments"
+                                  [value]="department"
+                      >
+                        {{department.title}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input
+                      placeholder="Уровень обучения"
+                      [matAutocomplete]="degree"
+                      [disabled]="degreeInputDisable"
+                      matInput>
+                    <mat-autocomplete
+                      [displayWith]="displayFn"
+                      (optionSelected)="changeDegree($event.option.value)"
+                      #degree="matAutocomplete">
+                      <mat-option
+                        *ngFor="let option of degrees"
+                        [value]="option"
+                      >
+                        {{option.title}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="directions">
+                    <input
+                      placeholder="Направление"
+                      [matAutocomplete]="dir"
+                      formControlName="direction_id"
+                      matInput>
+                    <mat-autocomplete (opened)="openDirection()" #dir="matAutocomplete" [displayWith]="displayFn">
+                      <mat-option *ngFor="let direction of directions" [value]="direction">
+                        {{direction.title}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <div class="step-button">
+                    <button type="button" mat-raised-button color="primary" matStepperPrevious>Назад</button>
+                    <button type="button" mat-raised-button color="primary" matStepperNext>Далее</button>
+                  </div>
+                </div>
+              </mat-step>
+              <!-- Информация о работе -->
+              <mat-step>
+                <ng-template matStepLabel>Информация о работе</ng-template>
+                <div class="step-form" style="margin-bottom: 20px;">
+                  <label>Вы работаете?</label>
+                  <mat-radio-group [disabled]="disabledJob" (change)="changeJob($event.value)">
+                    <mat-radio-button class="step-radio" [value]="true" [checked]="true">Да</mat-radio-button>
+                    <mat-radio-button [value]="false">Нет</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div class="step-form" formGroupName="employment" *ngIf="showJobInform">
+                  <div class="step-form" formGroupName="company">
+                    <mat-form-field>
+                      <mat-label>Название компании</mat-label>
+                      <input formControlName="title" matInput>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Город где находится компания</mat-label>
+                      <input formControlName="city" matInput>
+                    </mat-form-field>
+                  </div>
+                  <mat-form-field>
+                    <mat-label>Ваша должность</mat-label>
+                    <input formControlName="position" matInput>
+                  </mat-form-field>
+                  <label id="example-radio-group-label">Вы работаете по специальности?</label>
+                  <mat-radio-group formControlName="speciality">
+                    <mat-radio-button class="step-radio" [value]="true">Да</mat-radio-button>
+                    <mat-radio-button [value]="false">Нет</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div class="step-form">
+                  <div class="step-button">
+                    <button type="button" mat-raised-button color="primary" matStepperPrevious>Назад</button>
+                    <button type="submit" mat-raised-button color="primary">Отправить</button>
+                  </div>
+                </div>
+              </mat-step>
+            </mat-vertical-stepper>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      Copyright © 2020 Университет Лобачевского
+    </p>
+  </div>
+</footer>
+<router-outlet></router-outlet>

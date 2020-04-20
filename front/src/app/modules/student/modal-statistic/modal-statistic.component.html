@@ -1,130 +1,130 @@
-<div class="modal is-active">
-  <div class="modal-background"></div>
-  <div class="modal-card">
-    <header class="modal-card-head">
-      <p class="modal-card-title">{{listStatistic.directions[0].direction.name}}</p>
-      <button (click)="goBack()" class="delete" aria-label="close"></button>
-    </header>
-    <section class="modal-card-body">
-      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-        <thead>
-          <tr>
-            <th>Уровень</th>
-            <th>Всего</th>
-            <th colspan="2">Труд-ны</th>
-            <th colspan="2">Труд-ны НЕ ПО СПЕЦ.</th>
-            <th colspan="2">Труд-ны ПО СПЕЦ.</th>
-            <th colspan="2">Не занятые</th>
-            <th colspan="2">Продолжение обучения</th>
-            <th colspan="2">Декрет</th>
-            <th colspan="2">Армия</th>
-            <th colspan="2">Бизнес</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ng-template ngFor let-direction [ngForOf]="listStatistic.directions">
-            <tr *ngIf="direction.all.count">
-                <td>{{direction.all.training}}</td>
-                <td>{{direction.all.count}}</td>
-                <td>{{direction.all.employed.num}}</td>
-                <td>{{direction.all.employed.percent}} %</td>
-                <td>{{direction.all.employed_no_activity.num}}</td>
-                <td>{{direction.all.employed_no_activity.percent}} %</td>
-                <td>{{direction.all.employed_activity.num}} </td>
-                <td>{{direction.all.employed_activity.percent}} %</td>
-                <td>{{direction.all.job.num}} </td>
-                <td>{{direction.all.job.percent}} %</td>
-                <td>{{direction.all.counting_education.num}} </td>
-                <td>{{direction.all.counting_education.percent}} %</td>
-                <td>{{direction.all.decree.num}} </td>
-                <td>{{direction.all.decree.percent}} %</td>
-                <td>{{direction.all.army.num}} </td>
-                <td>{{direction.all.army.percent}} %</td>
-                <td>{{direction.all.business.num}} </td>
-                <td>{{direction.all.business.percent}} %</td>
-            </tr>
-            <tr *ngIf="direction.bachelor.count">
-              <td>{{direction.bachelor.training}}</td>
-                <td>{{direction.bachelor.count}}</td>
-                <td>{{direction.bachelor.employed.num}}</td>
-                <td>{{direction.bachelor.employed.percent}} %</td>
-                <td>{{direction.bachelor.employed_no_activity.num}}</td>
-                <td>{{direction.bachelor.employed_no_activity.percent}} %</td>
-                <td>{{direction.bachelor.employed_activity.num}} </td>
-                <td>{{direction.bachelor.employed_activity.percent}} %</td>
-                <td>{{direction.bachelor.job.num}} </td>
-                <td>{{direction.bachelor.job.percent}} %</td>
-                <td>{{direction.bachelor.counting_education.num}} </td>
-                <td>{{direction.bachelor.counting_education.percent}} %</td>
-                <td>{{direction.bachelor.decree.num}} </td>
-                <td>{{direction.bachelor.decree.percent}} %</td>
-                <td>{{direction.bachelor.army.num}} </td>
-                <td>{{direction.bachelor.army.percent}} %</td>
-                <td>{{direction.bachelor.business.num}} </td>
-                <td>{{direction.bachelor.business.percent}} %</td>
-            </tr>
-            <tr *ngIf="direction.spec.count">
-              <td>{{direction.spec.training}}</td>
-              <td>{{direction.spec.count}}</td>
-              <td>{{direction.spec.employed.num}}</td>
-              <td>{{direction.spec.employed.percent}} %</td>
-              <td>{{direction.spec.employed_no_activity.num}}</td>
-              <td>{{direction.spec.employed_no_activity.percent}} %</td>
-              <td>{{direction.spec.employed_activity.num}} </td>
-              <td>{{direction.spec.employed_activity.percent}} %</td>
-              <td>{{direction.spec.job.num}} </td>
-              <td>{{direction.spec.job.percent}} %</td>
-              <td>{{direction.spec.counting_education.num}} </td>
-              <td>{{direction.spec.counting_education.percent}} %</td>
-              <td>{{direction.spec.decree.num}} </td>
-              <td>{{direction.spec.decree.percent}} %</td>
-              <td>{{direction.spec.army.num}} </td>
-              <td>{{direction.spec.army.percent}} %</td>
-              <td>{{direction.spec.business.num}} </td>
-              <td>{{direction.spec.business.percent}} %</td>
-            </tr>
-            <tr *ngIf="direction.mag.count">
-                <td>{{direction.mag.training}}</td>
-                <td>{{direction.mag.count}}</td>
-                <td>{{direction.mag.employed.num}}</td>
-                <td>{{direction.mag.employed.percent}} %</td>
-                <td>{{direction.mag.employed_no_activity.num}}</td>
-                <td>{{direction.mag.employed_no_activity.percent}} %</td>
-                <td>{{direction.mag.employed_activity.num}} </td>
-                <td>{{direction.mag.employed_activity.percent}} %</td>
-                <td>{{direction.mag.job.num}} </td>
-                <td>{{direction.mag.job.percent}} %</td>
-                <td>{{direction.mag.counting_education.num}} </td>
-                <td>{{direction.mag.counting_education.percent}} %</td>
-                <td>{{direction.mag.decree.num}} </td>
-                <td>{{direction.mag.decree.percent}} %</td>
-                <td>{{direction.mag.army.num}} </td>
-                <td>{{direction.mag.army.percent}} %</td>
-                <td>{{direction.mag.business.num}} </td>
-                <td>{{direction.mag.business.percent}} %</td>
-            </tr>
-          </ng-template>
-        </tbody>
-      </table>
-      <div class="columns is-flex-wrap">
-        <div class="column">
-          <raw-chart
-            class="chart-plans"
-            [chartData]="chartPlansStudent"
-          ></raw-chart>
-        </div>
-        <div class="column">
-          <raw-chart
-            class="chart-plans"
-            [chartData]="chartEmployedStudent"
-          ></raw-chart>
-        </div>
-      </div>
+<!--<div class="modal is-active">-->
+<!--  <div class="modal-background"></div>-->
+<!--  <div class="modal-card">-->
+<!--    <header class="modal-card-head">-->
+<!--      <p class="modal-card-title">{{listStatistic.directions[0].direction.name}}</p>-->
+<!--      <button (click)="goBack()" class="delete" aria-label="close"></button>-->
+<!--    </header>-->
+<!--    <section class="modal-card-body">-->
+<!--      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">-->
+<!--        <thead>-->
+<!--          <tr>-->
+<!--            <th>Уровень</th>-->
+<!--            <th>Всего</th>-->
+<!--            <th colspan="2">Труд-ны</th>-->
+<!--            <th colspan="2">Труд-ны НЕ ПО СПЕЦ.</th>-->
+<!--            <th colspan="2">Труд-ны ПО СПЕЦ.</th>-->
+<!--            <th colspan="2">Не занятые</th>-->
+<!--            <th colspan="2">Продолжение обучения</th>-->
+<!--            <th colspan="2">Декрет</th>-->
+<!--            <th colspan="2">Армия</th>-->
+<!--            <th colspan="2">Бизнес</th>-->
+<!--          </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--          <ng-template ngFor let-direction [ngForOf]="listStatistic.directions">-->
+<!--            <tr *ngIf="direction.all.count">-->
+<!--                <td>{{direction.all.training}}</td>-->
+<!--                <td>{{direction.all.count}}</td>-->
+<!--                <td>{{direction.all.employed.num}}</td>-->
+<!--                <td>{{direction.all.employed.percent}} %</td>-->
+<!--                <td>{{direction.all.employed_no_activity.num}}</td>-->
+<!--                <td>{{direction.all.employed_no_activity.percent}} %</td>-->
+<!--                <td>{{direction.all.employed_activity.num}} </td>-->
+<!--                <td>{{direction.all.employed_activity.percent}} %</td>-->
+<!--                <td>{{direction.all.job.num}} </td>-->
+<!--                <td>{{direction.all.job.percent}} %</td>-->
+<!--                <td>{{direction.all.counting_education.num}} </td>-->
+<!--                <td>{{direction.all.counting_education.percent}} %</td>-->
+<!--                <td>{{direction.all.decree.num}} </td>-->
+<!--                <td>{{direction.all.decree.percent}} %</td>-->
+<!--                <td>{{direction.all.army.num}} </td>-->
+<!--                <td>{{direction.all.army.percent}} %</td>-->
+<!--                <td>{{direction.all.business.num}} </td>-->
+<!--                <td>{{direction.all.business.percent}} %</td>-->
+<!--            </tr>-->
+<!--            <tr *ngIf="direction.bachelor.count">-->
+<!--              <td>{{direction.bachelor.training}}</td>-->
+<!--                <td>{{direction.bachelor.count}}</td>-->
+<!--                <td>{{direction.bachelor.employed.num}}</td>-->
+<!--                <td>{{direction.bachelor.employed.percent}} %</td>-->
+<!--                <td>{{direction.bachelor.employed_no_activity.num}}</td>-->
+<!--                <td>{{direction.bachelor.employed_no_activity.percent}} %</td>-->
+<!--                <td>{{direction.bachelor.employed_activity.num}} </td>-->
+<!--                <td>{{direction.bachelor.employed_activity.percent}} %</td>-->
+<!--                <td>{{direction.bachelor.job.num}} </td>-->
+<!--                <td>{{direction.bachelor.job.percent}} %</td>-->
+<!--                <td>{{direction.bachelor.counting_education.num}} </td>-->
+<!--                <td>{{direction.bachelor.counting_education.percent}} %</td>-->
+<!--                <td>{{direction.bachelor.decree.num}} </td>-->
+<!--                <td>{{direction.bachelor.decree.percent}} %</td>-->
+<!--                <td>{{direction.bachelor.army.num}} </td>-->
+<!--                <td>{{direction.bachelor.army.percent}} %</td>-->
+<!--                <td>{{direction.bachelor.business.num}} </td>-->
+<!--                <td>{{direction.bachelor.business.percent}} %</td>-->
+<!--            </tr>-->
+<!--            <tr *ngIf="direction.spec.count">-->
+<!--              <td>{{direction.spec.training}}</td>-->
+<!--              <td>{{direction.spec.count}}</td>-->
+<!--              <td>{{direction.spec.employed.num}}</td>-->
+<!--              <td>{{direction.spec.employed.percent}} %</td>-->
+<!--              <td>{{direction.spec.employed_no_activity.num}}</td>-->
+<!--              <td>{{direction.spec.employed_no_activity.percent}} %</td>-->
+<!--              <td>{{direction.spec.employed_activity.num}} </td>-->
+<!--              <td>{{direction.spec.employed_activity.percent}} %</td>-->
+<!--              <td>{{direction.spec.job.num}} </td>-->
+<!--              <td>{{direction.spec.job.percent}} %</td>-->
+<!--              <td>{{direction.spec.counting_education.num}} </td>-->
+<!--              <td>{{direction.spec.counting_education.percent}} %</td>-->
+<!--              <td>{{direction.spec.decree.num}} </td>-->
+<!--              <td>{{direction.spec.decree.percent}} %</td>-->
+<!--              <td>{{direction.spec.army.num}} </td>-->
+<!--              <td>{{direction.spec.army.percent}} %</td>-->
+<!--              <td>{{direction.spec.business.num}} </td>-->
+<!--              <td>{{direction.spec.business.percent}} %</td>-->
+<!--            </tr>-->
+<!--            <tr *ngIf="direction.mag.count">-->
+<!--                <td>{{direction.mag.training}}</td>-->
+<!--                <td>{{direction.mag.count}}</td>-->
+<!--                <td>{{direction.mag.employed.num}}</td>-->
+<!--                <td>{{direction.mag.employed.percent}} %</td>-->
+<!--                <td>{{direction.mag.employed_no_activity.num}}</td>-->
+<!--                <td>{{direction.mag.employed_no_activity.percent}} %</td>-->
+<!--                <td>{{direction.mag.employed_activity.num}} </td>-->
+<!--                <td>{{direction.mag.employed_activity.percent}} %</td>-->
+<!--                <td>{{direction.mag.job.num}} </td>-->
+<!--                <td>{{direction.mag.job.percent}} %</td>-->
+<!--                <td>{{direction.mag.counting_education.num}} </td>-->
+<!--                <td>{{direction.mag.counting_education.percent}} %</td>-->
+<!--                <td>{{direction.mag.decree.num}} </td>-->
+<!--                <td>{{direction.mag.decree.percent}} %</td>-->
+<!--                <td>{{direction.mag.army.num}} </td>-->
+<!--                <td>{{direction.mag.army.percent}} %</td>-->
+<!--                <td>{{direction.mag.business.num}} </td>-->
+<!--                <td>{{direction.mag.business.percent}} %</td>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
+<!--        </tbody>-->
+<!--      </table>-->
+<!--      <div class="columns is-flex-wrap">-->
+<!--        <div class="column">-->
+<!--          <raw-chart-->
+<!--            class="chart-plans"-->
+<!--            [chartData]="chartPlansStudent"-->
+<!--          ></raw-chart>-->
+<!--        </div>-->
+<!--        <div class="column">-->
+<!--          <raw-chart-->
+<!--            class="chart-plans"-->
+<!--            [chartData]="chartEmployedStudent"-->
+<!--          ></raw-chart>-->
+<!--        </div>-->
+<!--      </div>-->
 
-    </section>
-    <footer class="modal-card-foot">
-      <button class="button is-success">Save changes</button>
-      <button class="button">Cancel</button>
-    </footer>
-  </div>
-</div>
+<!--    </section>-->
+<!--    <footer class="modal-card-foot">-->
+<!--      <button class="button is-success">Save changes</button>-->
+<!--      <button class="button">Cancel</button>-->
+<!--    </footer>-->
+<!--  </div>-->
+<!--</div>-->

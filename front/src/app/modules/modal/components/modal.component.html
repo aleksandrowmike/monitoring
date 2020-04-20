@@ -1,22 +1,22 @@
-<div class="modal is-active">
-  <div class="modal-background"></div>
-  <div class="modal-card" *ngIf="createSuccess">
-    <section class="modal-card-body success-card">
-      <img class="success-img" src="assets/images/success.svg" alt="">
-      <div class="id-container">
-        <h3>Ваш индентификатор в системе:</h3>
-        <strong class="id-strong">{{id}}</strong>
-      </div>
-    </section>
-  </div>
-  <div class="modal-card" *ngIf="updateStudents">
-    <header class="modal-card-head">
-      <p class="modal-card-title">Редактирование студента #{{updateValue.student.id}}</p>
-      <button class="delete" (click)="goBack()" aria-label="close"></button>
-    </header>
-    <section class="modal-card-body">
-      <student-form [updateData]="updateValue"></student-form>
-    </section>
-  </div>
-  <button class="modal-close is-large" (click)="goBack()"  aria-label="close"></button>
-</div>
+<!--<div class="modal is-active">-->
+<!--  <div class="modal-background"></div>-->
+<!--  <div class="modal-card" *ngIf="createSuccess">-->
+<!--    <section class="modal-card-body success-card">-->
+<!--      <img class="success-img" src="assets/images/success.svg" alt="">-->
+<!--      <div class="id-container">-->
+<!--        <h3>Ваш индентификатор в системе:</h3>-->
+<!--        <strong class="id-strong">{{id}}</strong>-->
+<!--      </div>-->
+<!--    </section>-->
+<!--  </div>-->
+<!--  <div class="modal-card" *ngIf="updateStudents">-->
+<!--    <header class="modal-card-head">-->
+<!--      <p class="modal-card-title">Редактирование студента #{{updateValue.student.id}}</p>-->
+<!--      <button class="delete" (click)="goBack()" aria-label="close"></button>-->
+<!--    </header>-->
+<!--    <section class="modal-card-body">-->
+<!--      <student-form [updateData]="updateValue"></student-form>-->
+<!--    </section>-->
+<!--  </div>-->
+<!--  <button class="modal-close is-large" (click)="goBack()"  aria-label="close"></button>-->
+<!--</div>-->

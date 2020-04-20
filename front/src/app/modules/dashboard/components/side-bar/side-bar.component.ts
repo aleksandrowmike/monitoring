@@ -7,12 +7,12 @@ import { IDirections } from "../../../../models/directions.interface";
 import { IFaculties } from "../../../../models/faculties.interface";
 import { IUser } from "../../../../models/user.interface";
 import { ApiService } from "../../../../services/api.service";
-import { GetAllDepartments, GetDirectionsFaculties, ResetDirectionsFaculties } from "../../../../store/actions/departments.actions";
+import { AuthService } from "../../../../services/auth.service";
+import { GetAllDepartments, ResetDirectionsFaculties } from "../../../../store/actions/departments.actions";
 import { GetFilter } from "../../../../store/actions/filter.actions";
 import { selectDepartmentsList, selectDirectionsFacultiesList } from "../../../../store/selectors/deraptments.selectors";
 import { getMode } from "../../../../store/selectors/students.selectors";
 import { IAppState } from "../../../../store/state/app.state";
-import { AuthService } from "../../../auth/services/auth.service";
 
 @Component({
   selector: "app-side-bar",
@@ -40,7 +40,7 @@ export class SideBarComponent implements OnInit {
     this.facultyShow = !this.facultyShow;
   }
   public dispatchDirections(id: number): void {
-    this.store.dispatch(new GetDirectionsFaculties({facultiesId: id}));
+    // this.store.dispatch(new GetDirectionsFaculties({facultiesId: id}));
     this.store.dispatch(new GetFilter({idFaculties: id}));
   }
   public signOut(): void {
@@ -51,8 +51,8 @@ export class SideBarComponent implements OnInit {
     this.selectedDirections = this.selectedDirections === 1 ? this.selectedDirections = 0 : this.selectedDirections = 1;
     this.store.dispatch(new ResetDirectionsFaculties());
     if (this.selectedDirections) {
-      this.store.dispatch(new GetDirectionsFaculties({facultiesId: id}));
-      this.directions = this.store.pipe(select(selectDirectionsFacultiesList));
+      // this.store.dispatch(new GetDirectionsFaculties({facultiesId: id}));
+      // this.directions = this.store.pipe(select(selectDirectionsFacultiesList));
     }
   }
   public filtered(value: string): void {

@@ -13,10 +13,10 @@ import { IAppState } from "../../store/state/app.state";
 })
 export class StudentComponent implements OnInit {
   public user: IUser[] = [];
-  public faculties: Observable<IFaculties[]>;
+  // public faculties: Observable<IFaculties[]>;
   constructor(private _store: Store<IAppState>) {}
   ngOnInit(): void {
     // this._store.dispatch(new GetAllFaculties());
-    this.faculties = this._store.pipe(select(selectFacultiesList));
+    // this.faculties = this._store.pipe(select(selectFacultiesList));
   }
 }

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { first, tap } from "rxjs/operators";
 import { setValidationErrors } from "../../../../helpers/form-helpers";
-import { AuthService } from "../../services/auth.service";
+import { AuthService } from "../../../../services/auth.service";
 
 @Component({
   selector: "app-sign-up",

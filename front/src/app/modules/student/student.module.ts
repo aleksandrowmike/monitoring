@@ -7,7 +7,6 @@ import { AutocompleteLibModule } from "angular-ng-autocomplete";
 import { NotSpecifiedPipe } from "../../pipes/not-specified.pipe";
 import { ShortTitlePipe } from "../../pipes/short-title.pipe";
 import { CardComponent } from "./card/card.component";
-import { CreateStudentComponent } from "./create/components/create-student.component";
 import { StudentFilterComponent } from "./filter/components/student-filter.component";
 import { StudentFormComponent } from "./form/components/student-form.component";
 import { StudentListComponent } from "./list/components/student-list.component";
@@ -19,7 +18,6 @@ import { TableComponent } from "./table/components/table.component";
 @NgModule({
   declarations: [
     StudentListComponent,
-    CreateStudentComponent,
     StatisticStudentComponent,
     StudentFormComponent,
     StudentFilterComponent,
@@ -39,7 +37,6 @@ import { TableComponent } from "./table/components/table.component";
   ],
   exports: [
     StudentListComponent,
-    CreateStudentComponent,
     StatisticStudentComponent,
     StudentFormComponent,
     StudentFilterComponent,

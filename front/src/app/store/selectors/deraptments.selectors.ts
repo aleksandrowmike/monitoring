@@ -18,3 +18,7 @@ export const selectDirectionsFacultiesList = createSelector(
   selectDepartments,
   (state: DepartmentState) => state.directionSelected,
 );
+export const selectDirectionsDepartmentList = createSelector(
+  selectDepartments,
+  (state: DepartmentState) => state.directionSelected,
+);

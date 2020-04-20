@@ -9,9 +9,10 @@ export function departmentsReducers (state: DepartmentState = initialDepartmentS
         data: action.payload
       };
     }
-    case EDepartmentsActions.GetDirectionsFacultiesSuccess: {
+    case EDepartmentsActions.GetDirectionsDepartmentSuccess: {
       return {
         ...state,
+        directionSelected: action.payload
       };
     }
     case EDepartmentsActions.ResetDirectionsFaculties: {

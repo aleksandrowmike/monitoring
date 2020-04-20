@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
-import { User } from "../../../models/user";
-import { ApiService } from "../../../services/api.service";
-import { TokenStorageService } from "../../../services/token-storage.service";
-import { AuthResponse, SignUpForm } from "../interface/sign-up-form";
+import { User } from "../models/user";
+import { AuthResponse, SignUpForm } from "../modules/auth/interface/sign-up-form";
+import { ApiService } from "./api.service";
+import { TokenStorageService } from "./token-storage.service";
 
 @Injectable()
 export class AuthService {
