@@ -14,67 +14,49 @@ use App\Http\Resources\StudentResource;
 use App\Plan;
 use App\Position;
 use App\Student;
-use DB;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return AnonymousResourceCollection
+     * @return StudentResource
      */
     public function index()
     {
-        return StudentResource::collection(Student::all()->each(function ($student) {
-            $student->plans = Plan::findOrFail($student->plan_id);
-            $student->employment = Employment::where('student_id', $student->id)->get()->each(function ($employment){
-                $employment->company = Company::findOrFail($employment->company_id);
-                $employment->position = Position::findOrFail($employment->position_id)->title;
-            });
-        }));
+        $response = Student::with('plan', 'employment', 'direction', 'category')->get();
+        return new StudentResource($response);
     }
 
     /**
      * Получение студентов выбранного факультета
      * @param $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|AnonymousResourceCollection|\Illuminate\Http\Response
+     * @param Request $request
+     * @return StudentResource
      */
-    public function showByDepartment($id)
+    public function showByDepartment($id, Request $request)
     {
-        if(!is_int($id))
-        {
-            return response([
-                'error' => [
-                    'code' => 422,
-                    'error_message' => 'Некореектные данные ресурса'
-                ]
-            ], 422);
-        }
         $directions = Direction::where('department_id', '=', $id)->get('id');
-        $response = Student::whereIn('direction_id', $directions)->get()->each(function ($student) {
-            $student->plans = Plan::findOrFail($student->plan_id);
-            $student->employment = Employment::where('student_id', $student->id)->get()->each(function ($employment){
-                $employment->company = Company::findOrFail($employment->company_id);
-                $employment->position = Position::findOrFail($employment->position_id)->title;
-            });
+        $response = Student::whereIn('direction_id', $directions)
+            ->with('plan','employment', 'direction', 'category');
+        $response->when(request()->filled('filter'), function ($query) {
+            $filters = explode(',', request('filter'));
+            $query->join('plans', 'students.plan_id', '=', 'plans.id');
+            foreach ($filters as $filter) {
+                [$criteria, $value] = explode(':', $filter);
+                $query->where($criteria, $value);
+            }
+            return $query;
         });
-        if($response->isEmpty())
-        {
-            return response([
-                'error' => [
-                    'code' => 422,
-                    'error_message' => 'Некореектные данные ресурса'
-                ]
-            ], 422);
-        }
-        return StudentResource::collection($response);
+        return new StudentResource($response->paginate(15));
     }
 
     public function showByDirection($id)
     {
-        $response = Student::where('direction_id', $id)->get();
+        $response = Student::where('direction_id', $id)
+            ->with( 'employment', 'direction', 'category')
+            ->get();
         if($response->isEmpty())
         {
             return response([
@@ -84,7 +66,7 @@ class StudentController extends Controller
                 ]
             ], 422);
         }
-        return StudentResource::collection($response);
+        return new StudentResource($response);
     }
 
     /**

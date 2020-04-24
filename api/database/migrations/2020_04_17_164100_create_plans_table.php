@@ -15,14 +15,14 @@ class CreatePlansTable extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->boolean('job');
-            $table->boolean('army');
-            $table->boolean('business');
-            $table->boolean('decree');
-            $table->boolean('education');
-            $table->string('other');
-            $table->string('level');
-            $table->string('university');
+            $table->boolean('job')->nullable();
+            $table->boolean('army')->nullable();
+            $table->boolean('business')->nullable();
+            $table->boolean('decree')->nullable();
+            $table->boolean('education')->nullable();
+            $table->string('other')->nullable();
+            $table->string('level')->nullable();
+            $table->string('university')->nullable();
         });
     }
 

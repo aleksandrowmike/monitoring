@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Direction;
+use App\Http\Resources\DirectionResource;
 use Illuminate\Http\Request;
 
 class DirectionController extends Controller
@@ -41,12 +42,12 @@ class DirectionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Direction  $direction
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return DirectionResource
      */
-    public function show(Direction $direction)
+    public function show($id)
     {
-        //
+        return new DirectionResource(Direction::findOrFail($id));
     }
 
     /**

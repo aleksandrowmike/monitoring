@@ -10,9 +10,9 @@ use Faker\Generator as Faker;
 
 $factory->define(Employment::class, function (Faker $faker) {
     return [
-        'student_id' => factory(Student::class)->create()->first()->id,
-        'company_id' => factory(Company::class)->create()->first()->id,
-        'position_id' => factory(Position::class)->create()->first()->id,
+        'student_id' => $faker->numberBetween(7,1000),
+        'company_id' => factory(Company::class),
+        'position_id' => factory(Position::class),
         'speciality' => $faker->boolean
     ];
 });

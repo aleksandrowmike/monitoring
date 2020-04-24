@@ -9,16 +9,7 @@ use Faker\Generator as Faker;
 $factory->define(Student::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
-        'plan_id' => factory(Plan::class)->create([
-            'job' => $faker->boolean,
-            'army' => $faker->boolean,
-            'business' => $faker->boolean,
-            'decree' =>  $faker->boolean,
-            'education' => $faker->boolean,
-            'other' => $faker->randomAscii,
-            'level' =>  'Бакалавриат',
-            'university' => 'МГУ им Ломоносова'
-        ])->first()->id,
+        'plan_id' => factory(Plan::class),
         'email' => $faker->email,
         'direction_id'=> $faker->numberBetween(50,205),
         'category_id'=> $faker->numberBetween(1,4),

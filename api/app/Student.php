@@ -45,6 +45,26 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
 
+    /*
+     * Используется для отоборажения планов студента
+     * */
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class);
+    }
+
+    public function employment()
+    {
+        return $this->hasOne(Employment::class)
+            ->join('companies', 'employments.company_id', '=', 'companies.id')
+            ->join('positions', 'employments.position_id', '=', 'positions.id')
+            ->select('employments.id',
+                'employments.student_id',
+                'companies.title as company',
+                'positions.title as position',
+                'companies.city');
+    }
+
     public function directions()
     {
         return $this->hasMany('App\Direction');
@@ -60,13 +80,13 @@ class Student extends Model
         return $this->belongsTo('App\Direction');
     }
 
-    public function categories()
+    public function category()
     {
-        return $this->hasMany('App\Category');
+        return $this->belongsTo('App\Category');
     }
 
     public function plans()
     {
-        return $this->belongsTo('App\Plan');
+        return $this->belongsTo(Plan::class);
     }
 }
