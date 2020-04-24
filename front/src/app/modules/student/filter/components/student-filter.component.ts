@@ -4,7 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { select, Store } from "@ngrx/store";
 import { SubscriptionLike } from "rxjs";
 import { IDirections } from "../../../../models/directions.interface";
-import { FilterStudent, GetStudentsForDirections } from "../../../../store/actions/student.actions";
+// import { FilterStudent, GetStudentsForDirections } from "../../../../store/actions/student.actions";
 import { selectDirectionsFacultiesList } from "../../../../store/selectors/deraptments.selectors";
 import { slectFilterList } from "../../../../store/selectors/filter.selectors";
 import { IAppState } from "../../../../store/state/app.state";
@@ -16,7 +16,7 @@ import { IAppState } from "../../../../store/state/app.state";
 })
 export class StudentFilterComponent implements OnInit, OnDestroy {
   public filterForm: FormGroup;
-
+  // options: string[] = ['One', 'Two', 'Three'];
   public keyword: string = "name";
   public searchDirectionsPlaceholder: string = "Направления";
   public filterCompanyNamePlaceholder: string = "Место работы";
@@ -57,10 +57,10 @@ export class StudentFilterComponent implements OnInit, OnDestroy {
       ...this.filterForm.value,
       faculty: this._ActivatedRoute.snapshot.params
     };
-    this._store.dispatch(new FilterStudent({filter: JSON.stringify(data)}));
+    // this._store.dispatch(new FilterStudent({filter: JSON.stringify(data)}));
   }
   public resetFilter(): void {
-    this._store.dispatch(new GetStudentsForDirections({id: this._ActivatedRoute.snapshot.params.id}));
+    // this._store.dispatch(new GetStudentsForDirections({id: this._ActivatedRoute.snapshot.params.id}));
   }
   public selectEvent(item: IDirections): void {}
   public selectCompanyName(item: object): void {}

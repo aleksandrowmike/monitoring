@@ -33,8 +33,8 @@
     <p class="menu-label">Основное</p>
     <ul class="menu-list">
       <li>
-        <a (click)="facultiesToggle()">Факультеты</a>
-        <ul *ngIf="facultyShow">
+        <a>Факультеты</a>
+        <ul routerLinkActive="active">
           <!--          <div class="field">-->
           <!--            <div class="control">-->
           <!--              <input #faculties_filter  class="input is-small" type="text" placeholder="Поиск факультета"-->
@@ -42,8 +42,7 @@
           <!--            </div>-->
           <!--          </div>-->
           <li *ngFor="let department of departmentsInit">
-            <a (click)="dispatchDirections(department.id)"
-               routerLinkActive="is-active"
+            <a routerLinkActive="is-active"
                routerLink="students/{{department.id}}">{{department.title}}</a>
           </li>
         </ul>

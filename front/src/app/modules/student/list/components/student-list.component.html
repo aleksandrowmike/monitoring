@@ -1,45 +1,146 @@
 <div class="container">
   <div class="search-bar">
   </div>
-  <div class="columns">
-    <div class="column is-full">
-      <div class="mat-elevation-z8">
-        <mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
-          <!-- Position Column -->
-          <ng-container *ngFor="let column of displayedColumns" matColumnDef="{{column}}">
-            <mat-header-cell *matHeaderCellDef> {{column}} </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element[column]}} </mat-cell>
-          </ng-container>
+    <div class="columns">
+      <div class="column is-12 is-full">
+        <div class="example-container mat-elevation-z8">
+          <div class="example-loading-shade"
+               *ngIf="isLoadingResults || isRateLimitReached">
+            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+            <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+              GitHub's API rate limit has been reached. It will be reset in one minute.
+            </div>
+          </div>
+          <div class="example-table-container">
+            <table mat-table [dataSource]="data"
+                   matSort matSortDisableClear matSortDirection="desc"
+                   class="example-table">
 
-          <ng-container matColumnDef="expandedDetail">
-            <mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-              <div class="example-element-detail"
-                   [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                    <div class="job" *ngIf="element['employment'].length; else noJob">
-                      {{ element['employment'][0]['company']['title'] }}
-                    </div>
-                <div class="plan" *ngIf="element['plans']; else noPlans">
-                      {{ element['plans']['job'] }}
-                </div>
-              </div>
-            </mat-cell>
-          </ng-container>
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let element; columns: displayedColumns;"
-              class="example-element-row"
-              [class.example-expanded-row]="expandedElement === element"
-              (click)="expandedElement = expandedElement === element ? null : element">
-          </mat-row>
-          <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
-        </mat-table>
-        <mat-paginator [pageSize]="5"></mat-paginator>
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef [ngStyle]="{'display': 'none'}"> No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+              </ng-container>
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef [ngStyle]="{'display': 'none'}"> No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef [ngStyle]="{'display': 'none'}"> No. </th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+              </ng-container>
+              <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef [ngStyle]="{'display': 'none'}"> No. </th>
+                <td mat-cell *matCellDef="let element"> {{element['direction']['title']}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="No">
+                <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">#</th>
+              </ng-container>
+              <ng-container matColumnDef="Name">
+                <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Фио</th>
+              </ng-container>
+              <ng-container matColumnDef="Email">
+                <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Email</th>
+              </ng-container>
+
+              <ng-container matColumnDef="Title">
+                <th mat-header-cell *matHeaderCellDef [attr.rowspan]="2">Направление</th>
+              </ng-container>
+
+              <ng-container *ngFor="let column of displayedColumnsPlan" matColumnDef="{{column}}">
+                <th mat-header-cell *matHeaderCellDef> {{russianNameColumn[column]}} </th>
+                <td mat-cell *matCellDef="let element"> {{element['plan'][column] | replaceValueWithText}} </td>
+              </ng-container>
+
+              <ng-container *ngFor="let column of displayedColumnsEducation" matColumnDef="{{column}}">
+                <th mat-header-cell *matHeaderCellDef> {{russianNameColumn[column]}} </th>
+                <td mat-cell *matCellDef="let element"> {{element['plan'][column]}} </td>
+              </ng-container>
+
+              <ng-container *ngFor="let column of displayedColumnsEmployment" matColumnDef="{{column}}">
+                <th mat-header-cell *matHeaderCellDef> {{russianNameColumn[column]}} </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element['employment']; else notFoundJob">
+                      {{element['employment'][column] | replaceValueWithText }}
+                    </span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="header-row-plan">
+                <th mat-header-cell *matHeaderCellDef [attr.colspan]="6"> Планы </th>
+              </ng-container>
+
+              <ng-container matColumnDef="header-row-education">
+                <th mat-header-cell *matHeaderCellDef [attr.colspan]="2"> Продолжение обучения </th>
+              </ng-container>
+
+              <ng-container matColumnDef="header-row-job">
+                <th mat-header-cell *matHeaderCellDef [attr.colspan]="3"> Работа </th>
+              </ng-container>
+
+
+              <tr mat-header-row *matHeaderRowDef="[
+              'No','Name','Email', 'Title',
+              'header-row-plan',
+              'header-row-education',
+              'header-row-job']"></tr>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+          <mat-paginator [length]="resultsLength" [pageSize]="15"></mat-paginator>
+        </div>
       </div>
     </div>
-  </div>
 </div>
-<ng-template #noJob>
-  не работает
-</ng-template>
-<ng-template #noPlans>
-  нету планов
+
+
+<!--    <div class="column is-full">-->
+<!--&lt;!&ndash;      <student-filter></student-filter>&ndash;&gt;-->
+<!--      <div class="mat-elevation-z8 example-container">-->
+<!--        <table mat-table  [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">-->
+
+
+
+<!--          <ng-container *ngFor="let column of displayedPlans" matColumnDef="{{column}}">-->
+<!--            <th mat-header-cell *matHeaderCellDef> {{russianColumn[column]}} </th>-->
+<!--            <td mat-cell *matCellDef="let element"> {{element['plans'][column]}} </td>-->
+<!--          </ng-container>-->
+
+
+
+
+<!--          <ng-container *ngFor="let column of displayedJobColumns" matColumnDef="{{column}}">-->
+<!--            <th mat-header-cell *matHeaderCellDef> {{column}} </th>-->
+<!--            <td mat-cell *matCellDef="let element">-->
+<!--              <span *ngIf="element['employment'].length">-->
+<!--                {{element['employment'][0][column]}}-->
+<!--              </span>-->
+<!--            </td>-->
+<!--          </ng-container>-->
+<!--          &lt;!&ndash; Header row first group &ndash;&gt;-->
+
+<!--          &lt;!&ndash; Header row second group &ndash;&gt;-->
+<!--          <ng-container matColumnDef="header-row-second-group">-->
+<!--            <th mat-header-cell *matHeaderCellDef [attr.colspan]="6"> Планы </th>-->
+<!--          </ng-container>-->
+
+
+
+
+<!--          <tr mat-header-row *matHeaderRowDef="[-->
+<!--          'No','Name','Email',-->
+<!--          'header-row-second-group',-->
+<!--          'header-row-group', 'header-row-job']"></tr>-->
+<!--          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--        </table>-->
+<!--      </div>-->
+<!--      <mat-paginator class="pag" [pageSize]="5"></mat-paginator>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<ng-template #notFoundJob>
+  <span> Не указал </span>
 </ng-template>

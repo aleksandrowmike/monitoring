@@ -1,9 +1,13 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
+import { MatListModule } from "@angular/material/list";
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { RouterModule } from "@angular/router";
 import { GoogleChartsModule } from "angular-google-charts";
@@ -18,6 +22,7 @@ import { ModalStatisticComponent } from "./modal-statistic/modal-statistic.compo
 import { StatisticStudentComponent } from "./statistic/components/statistic-student.component";
 import { StudentRoutingModule } from "./student-routing.module";
 import { TableComponent } from "./table/components/table.component";
+import { ReplaceValueWithTextPipe } from './list/pipes/replace-value-with-text.pipe';
 
 
 @NgModule({
@@ -31,6 +36,7 @@ import { TableComponent } from "./table/components/table.component";
     NotSpecifiedPipe,
     CardComponent,
     ModalStatisticComponent,
+    ReplaceValueWithTextPipe,
   ],
   imports: [
     CommonModule,
@@ -45,6 +51,10 @@ import { TableComponent } from "./table/components/table.component";
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
+    MatListModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
   ],
   exports: [
     StudentListComponent,

@@ -7,7 +7,7 @@ import { Action } from "../../../../interfaces/actions.emun";
 import { IDirections } from "../../../../models/directions.interface";
 import { IFaculties } from "../../../../models/faculties.interface";
 import { IStudent } from "../../../../models/student.interface";
-import { CreateStudent } from "../../../../store/actions/student.actions";
+// import { CreateStudent } from "../../../../store/actions/student.actions";
 import { selectDirectionsFacultiesList, selectFacultiesList } from "../../../../store/selectors/deraptments.selectors";
 import { IAppState } from "../../../../store/state/app.state";
 @Component({
@@ -77,7 +77,7 @@ export class StudentFormComponent implements OnInit, OnDestroy {
       return false;
     }
     console.log(this.createForm.value);
-    this._store.dispatch(new CreateStudent({data: JSON.stringify(this.createForm.value)}));
+    // this._store.dispatch(new CreateStudent({data: JSON.stringify(this.createForm.value)}));
   }
   public isControlInvalid(controlName: string): boolean {
     const control = this.createForm.get(controlName);

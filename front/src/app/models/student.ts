@@ -1,4 +1,7 @@
+import { Direction } from "./direction";
+
 export interface Plan {
+  id: number;
   job: boolean;
   army: boolean;
   business: boolean;
@@ -9,7 +12,9 @@ export interface Plan {
   university: string;
 }
 export interface Employment {
-  company: {title: string, city: string};
+  id: number;
+  company: string;
+  city: string;
   position: string;
   speciality: boolean;
 }
@@ -18,12 +23,16 @@ export interface Student {
   name: string;
   email: string;
   phone: string;
-  plans: Plan;
-  employment: Employment;
   specialty_activity: boolean;
   year_graduate: string;
   agreement: boolean;
   direction_id: number;
   category_id: number;
-
+  plans: Plan;
+  employment: Employment;
+  direction: Direction;
+  category: {
+    id: number;
+    title: string;
+  };
 }

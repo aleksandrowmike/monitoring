@@ -1,14 +1,18 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute } from "@angular/router";
 import { select, Store } from "@ngrx/store";
-import { Observable } from "rxjs";
+import * as queryString from "query-string";
+import { merge, Observable, of } from "rxjs";
+import { catchError, map, startWith, switchMap } from "rxjs/operators";
+import { HttpError } from "../../../../interfaces/error";
+import { StudentsResponse } from "../../../../interfaces/students-response";
 import { Student } from "../../../../models/student";
-import { IStudent } from "../../../../models/student.interface";
-import { GetStudentsForDirections } from "../../../../store/actions/student.actions";
-import { getMode, selectStudentList } from "../../../../store/selectors/students.selectors";
+import { ApiService } from "../../../../services/api.service";
+import { GetStudentsByDepartment, ParamsGetStudents } from "../../../../store/actions/student.actions";
+import { selectStudentList } from "../../../../store/selectors/students.selectors";
 import { IAppState } from "../../../../store/state/app.state";
 
 @Component({
@@ -16,34 +20,89 @@ import { IAppState } from "../../../../store/state/app.state";
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: "./student-list.component.html",
   styleUrls: ["./student-list.component.sass"],
-  animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({height: "0px", minHeight: "0"})),
-      state("expanded", style({height: "*"})),
-      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
-    ]),
-  ],
 })
-export class StudentListComponent implements OnInit {
+export class StudentListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] =
-    ["id", "name", "email", "phone", "specialty_activity", "year_graduate", "direction_id"];
-  public dataSource: MatTableDataSource<Student>;
-  public data: Student[];
-  public expandedElement: Student | null;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+    ["id",
+      "name",
+      "email",
+      "title",
+      "job",
+      "army",
+      "business",
+      "decree",
+      "education",
+      "other",
+      "level",
+      "university",
+      "company",
+      "position",
+      "city",
+    ];
+  public displayedColumnsPlan: string [] = ["job", "army", "business", "decree", "education", "other"];
+  public displayedColumnsEmployment: string [] = ["company", "position", "city"];
+  public displayedColumnsEducation: string [] = ["level", "university"];
+  public russianNameColumn: object = {
+    job: "Работа",
+    other: "Другое",
+    army: "Армия",
+    business: "Бизнесс",
+    decree: "Декрет",
+    education: "Обучение",
+    level: "Уровень образования",
+    university: "Университет",
+    company: "Компания",
+    position: "Должность",
+    city: "Город",
+  };
+
+  public data: Student[] = [];
+  public resultsLength = 0;
+  public isLoadingResults = true;
+  public isRateLimitReached = false;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   constructor(private activatedRoute: ActivatedRoute,
-              private store: Store<IAppState>) {
-    this.store.dispatch(new GetStudentsForDirections({id: this.activatedRoute.snapshot.params.id}));
-    this.store
-      .pipe(select(selectStudentList))
-      .subscribe(data => {
-        this.data = data;
-      });
+              private store: Store<IAppState>,
+              private api: ApiService,
+              private ref: ChangeDetectorRef) {
+  }
+  public getStudents$(id: number, page: number, sort: string = "", filter: string = ""): Observable<StudentsResponse> {
+    return this.api.get("students/department/" + id + "/?filter=" + filter + "&sort=" + sort + "&page=" + page);
+  }
+  ngAfterViewInit(): void {
+    this.activatedRoute.params.subscribe(params => {
+      this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+      merge(this.sort.sortChange, this.paginator.page)
+        .pipe(
+          startWith({}),
+          switchMap(() => {
+            this.isLoadingResults = true;
+            this.ref.detectChanges();
+            return this.getStudents$(params.id, this.paginator.pageIndex + 1);
+          }),
+          map(response => {
+            this.isLoadingResults = false;
+            this.isRateLimitReached = false;
+            this.resultsLength = response.meta.total;
+            console.log(response);
+            return response.data;
+          }),
+          catchError(() => {
+            this.isLoadingResults = false;
+            this.isRateLimitReached = true;
+            return of([]);
+          }),
+        ).subscribe(data => {
+          // console.log(data);
+          this.data = data;
+          this.ref.detectChanges();
+        });
+    });
   }
 
   ngOnInit(): void {
-    console.log(this.data);
-    this.dataSource = new MatTableDataSource(this.data);
-    this.dataSource.paginator = this.paginator;
   }
 }

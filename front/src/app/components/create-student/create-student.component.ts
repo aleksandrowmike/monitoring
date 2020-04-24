@@ -114,7 +114,7 @@ export class CreateStudentComponent implements OnInit {
     ).subscribe(
       (data) => this.openDialog(data.id),
       ((error: HttpErrorResponse) => {
-        setValidationErrors(this.form, error);
+        // setValidationErrors(this.form, error);
         console.log(error);
       }),
     );

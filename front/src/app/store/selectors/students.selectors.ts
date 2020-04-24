@@ -7,7 +7,7 @@ const selectStudents = (state: IAppState) => state.students;
 const appMode = (state: IAppState) => state.mode;
 export const selectStudentList = createSelector(
   selectStudents,
-  (state: IStudentState) => state.data,
+  (state: IStudentState) => state.response,
 );
 export const selectSelectedStudent = createSelector(
   selectStudents,

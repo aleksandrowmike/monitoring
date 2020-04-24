@@ -5,7 +5,7 @@ import { select, Store } from "@ngrx/store";
 import { SubscriptionLike } from "rxjs";
 import { Action } from "../../../interfaces/actions.emun";
 import { IStudent } from "../../../models/student.interface";
-import { GetStudent, ResetCreateStudent } from "../../../store/actions/student.actions";
+// import { GetStudent, ResetCreateStudent } from "../../../store/actions/student.actions";
 import { getCreateIdStudent, selectSelectedStudent } from "../../../store/selectors/students.selectors";
 import { IAppState } from "../../../store/state/app.state";
 
@@ -45,7 +45,7 @@ export class ModalComponent implements OnInit, OnDestroy {
      case Action.update: {
        this.updateStudents = true;
        const id: number = Number(this._activatedRoute.snapshot.url[1].path);
-       this._store.dispatch(new GetStudent({id: id}));
+       // this._store.dispatch(new GetStudent({id: id}));
        this.subscriptions.push(this._store.pipe(select(selectSelectedStudent)).subscribe(value => this.updateValue = value));
        break;
      }
@@ -57,6 +57,6 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(
       (subscription) => subscription.unsubscribe());
     this.subscriptions = [];
-    this._store.dispatch(new ResetCreateStudent());
+    // this._store.dispatch(new ResetCreateStudent());
   }
 }

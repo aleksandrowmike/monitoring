@@ -1,80 +1,52 @@
-.search-bar
-  background-color: #fff
-  padding-left: 1.5rem
-  border-bottom: 1px solid #EBEFF2
-  border-left: 1px solid #EBEFF2
-  height: 60px
-  display: flex
-  align-items: center
-  width: 100%
 .is-full
   padding: 2.5rem
+.mat-elevation-z8
+  position: relative
+.pag
+  position: relative
+  box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.14), 0px 8px 9px 1px rgba(0, 0, 0, 0.1), 0px 13px 20px 2px rgba(0, 0, 0, 0.08)
+
+th.mat-header-cell, td.mat-cell
+  text-align: center
+  border: 1px solid #CCC
+  border-top: none
+  &:nth-child(4)
+    width: 20%
+  &:first-child
+    border-left: none
+  &:last-child
+    border-right: none
+  padding: 0 !important
+  vertical-align: middle
 
 
+.example-container
+  max-width: 1030px
 
-tr.example-element-row:not(.example-expanded-row):hover
-  background: whitesmoke
-
-
-tr.example-element-row:not(.example-expanded-row):active
-  background: #efefef
+table
+  width: 190%
 
 
-.example-element-row td
-  border-bottom-width: 0
+.example-table-container
+  position: relative
+  max-height: 500px
+  overflow: auto
 
-
-
-.example-element-diagram
-  min-width: 80px
-  border: 2px solid black
-  padding: 8px
-  font-weight: lighter
-  margin: 8px 0
-  height: 104px
-
-
-.example-element-symbol
-  font-weight: bold
-  font-size: 40px
-  line-height: normal
-
-
-.example-element-description
-  padding: 16px
-
-
-.example-element-description-attribution
-  opacity: 0.5
-
-mat-row
-  &:nth-child(odd)
-    min-height: 0
-    border-bottom-width: 0
-
-.example-expanded-row ~ mat-row
-  border-bottom-width: 1px
-
-@media screen and (max-width: 960px)
-  mat-table
-    display: flex
-    flex-direction: column
-
-  mat-header-row
-    min-height: 32px
-
-  mat-header-cell, mat-cell
-    &:not(:first-child)
-      display: none
-
-    &:nth-child(4)
-      display: flex
-
-    &:first-child
-      padding-left: 0
-
-
-mat-row
+.example-loading-shade
+  position: absolute
+  top: 0
+  left: 0
+  bottom: 56px
+  right: 0
+  background: rgba(0, 0, 0, 0.15)
+  z-index: 1
+  display: flex
   align-items: center
+  justify-content: center
 
+
+.example-rate-limit-reached
+  color: #980000
+  max-width: 360px
+  text-align: center
 
