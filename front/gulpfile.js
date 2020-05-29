@@ -3,27 +3,27 @@ const removeFiles = require('gulp-remove-files');
 const merge = require("merge-stream");
 
 gulp.task('clearJS', function () {
-  return gulp.src('../../public/*.js')
+  return gulp.src('../api/public/*.js')
     .pipe(removeFiles());
 });
 gulp.task('clearCss', function () {
-  return gulp.src('../../public/*.css')
+  return gulp.src('../api/public/*.css')
     .pipe(removeFiles());
 });
 gulp.task('clearIco', function () {
-  return gulp.src('../../public/*.ico')
+  return gulp.src('../api/public/*.ico')
     .pipe(removeFiles());
 });
 gulp.task('clearHtml', function () {
-  return gulp.src('../views/*.html')
+  return gulp.src('../api/resources/views/*.html')
     .pipe(removeFiles());
 });
 gulp.task('copy-dist', function() {
   return merge([
-    gulp.src('./dist/*.js').pipe(gulp.dest('../../public')),
-    gulp.src('./dist/*.css').pipe(gulp.dest('../../public')),
-    gulp.src('./dist/*.ico').pipe(gulp.dest('../../public')),
-    gulp.src('./dist/*.html').pipe(gulp.dest('../views')),
+    gulp.src('./dist/*.js').pipe(gulp.dest('../api/public')),
+    gulp.src('./dist/*.css').pipe(gulp.dest('../api/public')),
+    gulp.src('./dist/*.ico').pipe(gulp.dest('../api/public')),
+    gulp.src('./dist/*.html').pipe(gulp.dest('../api/resources/views')),
   ]);
 });
 gulp.task('gulp-build', gulp.series('clearJS', 'clearCss', 'clearIco', 'clearHtml','copy-dist'));
