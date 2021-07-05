@@ -20,7 +20,7 @@ $factory->define(Student::class, function (Faker $faker) {
             'university' => 'МГУ им Ломоносова'
         ])->first()->id,
         'email' => $faker->email,
-        'direction_id'=> $faker->numberBetween(1,205),
+        'direction_id'=> $faker->numberBetween(50,205),
         'category_id'=> $faker->numberBetween(1,4),
         'phone' => $faker->phoneNumber,
         'specialty_activity' => $faker->boolean,

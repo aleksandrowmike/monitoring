@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Department whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Department whereTitle($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Direction[] $directions
+ * @property-read int|null $directions_count
  */
 class Department extends Model
 {

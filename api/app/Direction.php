@@ -21,8 +21,14 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Direction whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Direction whereTitle($value)
  * @mixin \Eloquent
+ * @property-read \App\Student $students
  */
 class Direction extends Model
 {
     public $timestamps = false;
+
+    public function students()
+    {
+        return $this->belongsTo('App\Student');
+    }
 }

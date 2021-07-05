@@ -11,4 +11,4 @@ export const selectFacultiesList = createSelector(
 export const selectDirectionsFacultiesList = createSelector(
   selectFaculties,
   (state: FacultiesState) => state.directionSelected,
-)
+);

@@ -23,5 +23,5 @@ export const getCountStudent = createSelector(
 );
 export const getCreateIdStudent = createSelector(
   selectStudents,
-  (state: IStudentState) => state.createId
+  (state: IStudentState) => state.createId,
 );

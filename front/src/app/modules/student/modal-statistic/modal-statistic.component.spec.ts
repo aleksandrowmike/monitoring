@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { ModalStatisticComponent } from './modal-statistic.component';
+import { ModalStatisticComponent } from "./modal-statistic.component";
 
-describe('ModalStatisticComponent', () => {
+describe("ModalStatisticComponent", () => {
   let component: ModalStatisticComponent;
   let fixture: ComponentFixture<ModalStatisticComponent>;
 
@@ -19,7 +19,7 @@ describe('ModalStatisticComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

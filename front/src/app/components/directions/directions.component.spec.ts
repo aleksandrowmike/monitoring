@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DirectionsComponent } from './directions.component';
+import { DirectionsComponent } from "./directions.component";
 
-describe('DirectionsComponent', () => {
+describe("DirectionsComponent", () => {
   let component: DirectionsComponent;
   let fixture: ComponentFixture<DirectionsComponent>;
 
@@ -19,7 +19,7 @@ describe('DirectionsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
